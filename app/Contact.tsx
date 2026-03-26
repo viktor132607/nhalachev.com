@@ -52,13 +52,15 @@ export default function Contact() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    name: name.trim(),
-                    email: email.trim(),
-                    company: "",
-                    message: composedMessage,
-                    website: website.trim(),
-                }),
+body: JSON.stringify({
+    name: name.trim(),
+    email: email.trim(),
+    phone: phone.trim(),
+    subject: subject.trim(),
+    company: "",
+    message: message.trim(),
+    website: website.trim(),
+}),
             })
 
             const data = await response.json().catch(() => null)
