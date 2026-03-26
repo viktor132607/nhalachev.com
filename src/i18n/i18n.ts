@@ -1,11 +1,8 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
-const savedLang =
-  typeof window !== "undefined" ? localStorage.getItem("lang") : "bg"
-
 i18n.use(initReactI18next).init({
-  lng: savedLang || "bg",
+  lng: "bg",
   fallbackLng: "bg",
   resources: {},
   interpolation: {
@@ -13,10 +10,13 @@ i18n.use(initReactI18next).init({
   },
 })
 
-i18n.on("languageChanged", (lng) => {
-  if (typeof window !== "undefined") {
+if (typeof window !== "undefined") {
+  const saved = localStorage.getItem("lang")
+  if (saved) i18n.changeLanguage(saved)
+
+  i18n.on("languageChanged", (lng) => {
     localStorage.setItem("lang", lng)
-  }
-})
+  })
+}
 
 export default i18n
