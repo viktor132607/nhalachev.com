@@ -5,11 +5,14 @@ import { usePathname, useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
 import { useEffect, useState } from "react"
 
+const THEME_KEY = "theme"
+
 export default function Navbar() {
     const { i18n } = useTranslation()
     const pathname = usePathname()
     const router = useRouter()
     const [mounted, setMounted] = useState(false)
+    const [isDark, setIsDark] = useState(false)
 
     useEffect(() => {
         setMounted(true)
@@ -18,6 +21,12 @@ export default function Navbar() {
         if (savedLang === "bg" || savedLang === "en") {
             void i18n.changeLanguage(savedLang)
         }
+
+        const savedTheme = localStorage.getItem(THEME_KEY)
+        const dark = savedTheme === "dark"
+
+        document.documentElement.classList.toggle("dark", dark)
+        setIsDark(dark)
     }, [i18n])
 
     const isBg = mounted ? i18n.language?.toLowerCase().startsWith("bg") : true
@@ -26,6 +35,14 @@ export default function Navbar() {
         localStorage.setItem("lang", lng)
         await i18n.changeLanguage(lng)
         router.refresh()
+    }
+
+    const toggleTheme = () => {
+        const next = !isDark
+        setIsDark(next)
+        document.documentElement.classList.toggle("dark", next)
+        localStorage.setItem(THEME_KEY, next ? "dark" : "light")
+        window.dispatchEvent(new Event("themechange"))
     }
 
     const goToServices = () => {
@@ -76,27 +93,29 @@ export default function Navbar() {
     const linkClass = (active: boolean) =>
         `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-sm font-semibold tracking-[0.01em] transition ${
             active
-                ? "text-slate-950 lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950"
-                : "text-slate-600 hover:text-slate-950"
+                ? "text-slate-950 dark:text-white lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950 dark:lg:after:bg-white"
+                : "text-slate-600 hover:text-slate-950 dark:text-zinc-300 dark:hover:text-white"
         }`
 
     const navButtonClass = (active: boolean) =>
         `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-sm font-semibold tracking-[0.01em] transition ${
             active
-                ? "text-slate-950 lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950"
-                : "text-slate-600 hover:text-slate-950"
+                ? "text-slate-950 dark:text-white lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950 dark:lg:after:bg-white"
+                : "text-slate-600 hover:text-slate-950 dark:text-zinc-300 dark:hover:text-white"
         }`
 
     const langButtonClass = (active: boolean) =>
         `text-[10px] font-bold uppercase tracking-[0.14em] transition sm:text-[11px] ${
-            active ? "text-slate-950" : "text-slate-400 hover:text-slate-700"
+            active
+                ? "text-slate-950 dark:text-white"
+                : "text-slate-400 hover:text-slate-700 dark:text-zinc-500 dark:hover:text-zinc-200"
         }`
 
     const homeActive = pathname === "/"
     const servicesActive = false
 
     return (
-        <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+        <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
             <div className="mx-auto max-w-[1600px] px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
                 <div className="grid min-h-[72px] grid-cols-1 items-center gap-y-3 py-3 sm:min-h-[80px] sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
                     <div className="order-2 flex items-center justify-center gap-5 sm:gap-6 lg:order-1 lg:justify-end lg:gap-8">
@@ -147,7 +166,22 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    <div className="order-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-200 pt-3 sm:gap-4 lg:order-4 lg:justify-end lg:border-t-0 lg:pt-0">
+                    <div className="order-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-200 pt-3 sm:gap-4 lg:order-4 lg:justify-end lg:border-t-0 lg:pt-0 dark:border-zinc-800">
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-transparent transition hover:border-neutral-200 hover:bg-neutral-100 dark:hover:border-white/10 dark:hover:bg-zinc-900"
+                            aria-label={isBg ? "Смени тема" : "Toggle theme"}
+                        >
+                            <img
+                                src="/light-mode.svg"
+                                alt=""
+                                className={`h-[15px] w-[15px] object-contain transition duration-200 ${
+                                    isDark ? "invert" : ""
+                                }`}
+                            />
+                        </button>
+
                         <div className="flex items-center gap-2">
                             <button
                                 type="button"
@@ -157,7 +191,7 @@ export default function Navbar() {
                                 BG
                             </button>
 
-                            <span className="text-slate-300">|</span>
+                            <span className="text-slate-300 dark:text-zinc-600">|</span>
 
                             <button
                                 type="button"

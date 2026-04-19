@@ -5,8 +5,8 @@ export default function About() {
     const { i18n } = useTranslation()
     const isBg = i18n.language?.toLowerCase().startsWith("bg")
 
-    const textClass = "text-[15px] leading-[2] text-[#4b5563]"
-    const sectionLine = "my-8 h-px w-full bg-[#d9d9d9]"
+    const textClass = "text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]"
+    const sectionLine = "my-8 h-px w-full bg-[#d9d9d9] dark:bg-[#333333]"
     const triangle = "mt-[9px] h-0 w-0 border-l-[8px] border-l-red-500 border-y-[6px] border-y-transparent"
 
     return (
@@ -15,12 +15,12 @@ export default function About() {
                 <img
                     src="/images/fuckinghell.png"
                     alt="Nikola Halachev"
-                    className="w-full max-w-[720px] border border-[#d9d9d9] object-cover"
+                    className="w-full max-w-[720px] border border-[#d9d9d9] object-cover dark:border-[#333333]"
                 />
 
                 {isBg ? (
                     <div className="mt-6 w-full max-w-[720px]">
-                        <h1 className="mb-6 text-center text-[22px] font-bold text-[#1f2937]">
+                        <h1 className="mb-6 text-center text-[22px] font-bold text-[#1f2937] dark:text-[#ffffff]">
                             Никола Халачев - Счетоводител
                         </h1>
 
@@ -45,19 +45,19 @@ export default function About() {
                         <div className={sectionLine} />
 
                         <div>
-                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563]">
+                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                 Професионалната си квалификация придобих в ИУ-Варна:
                             </p>
 
                             <ul className="space-y-2">
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>
                                         <strong>2023 г.</strong> – Бакалавър „Счетоводство и одит“
                                     </span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>
                                         <strong>2024 г.</strong> – Магистър „Счетоводство и контрол“
@@ -82,27 +82,27 @@ export default function About() {
 
                         <div className={sectionLine} />
 
-                        <p className="mb-5 text-[15px] font-semibold leading-[2] text-[#1f2937]">
+                        <p className="mb-5 text-[15px] font-semibold leading-[2] text-[#1f2937] dark:text-[#ffffff]">
                             Над 3-годишен опит в счетоводството.
                         </p>
 
                         <div>
-                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563]">
+                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                 Работа с над 30 предприятия като:
                             </p>
 
                             <ul className="space-y-2">
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>ИНОВАТИВНИ ФИНАНСИ ХОЛДИНГ</span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>7К КОРПОРЕЙШЪН</span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>С. Г. ГРУП</span>
                                 </li>
@@ -120,7 +120,7 @@ export default function About() {
                     </div>
                 ) : (
                     <div className="mt-6 w-full max-w-[720px]">
-                        <h1 className="mb-6 text-center text-[22px] font-bold text-[#1f2937]">
+                        <h1 className="mb-6 text-center text-[22px] font-bold text-[#1f2937] dark:text-[#ffffff]">
                             Nikola Halachev - Accountant
                         </h1>
 
@@ -145,19 +145,19 @@ export default function About() {
                         <div className={sectionLine} />
 
                         <div>
-                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563]">
+                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                 I obtained my professional qualification at the University of Economics – Varna:
                             </p>
 
                             <ul className="space-y-2">
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>
                                         <strong>2023</strong> – Bachelor’s Degree in Accounting and Audit
                                     </span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>
                                         <strong>2024</strong> – Master’s Degree in Accounting and Control
@@ -182,27 +182,27 @@ export default function About() {
 
                         <div className={sectionLine} />
 
-                        <p className="mb-5 text-[15px] font-semibold leading-[2] text-[#1f2937]">
+                        <p className="mb-5 text-[15px] font-semibold leading-[2] text-[#1f2937] dark:text-[#ffffff]">
                             Over 3 years of accounting experience.
                         </p>
 
                         <div>
-                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563]">
+                            <p className="mb-4 text-[15px] font-medium leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                 Worked with more than 30 companies such as:
                             </p>
 
                             <ul className="space-y-2">
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>INNOVATIVE FINANCE HOLDING</span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>7K CORPORATION</span>
                                 </li>
 
-                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563]">
+                                <li className="flex items-start gap-3 text-[15px] leading-[2] text-[#4b5563] dark:text-[#ffffff]">
                                     <span className={triangle}></span>
                                     <span>S. G. GROUP</span>
                                 </li>

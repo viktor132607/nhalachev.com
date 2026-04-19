@@ -7,70 +7,321 @@ export default function Home() {
     const lang = i18n.language
 
     const pageWrap =
-        "mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6 sm:py-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
+        "mx-auto w-full max-w-[1600px] px-2 py-2 sm:px-3 sm:py-3 md:px-4 lg:px-5 xl:px-6 2xl:px-8"
 
     const heroClass =
-        "relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] sm:rounded-[28px]"
+        "relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:border-zinc-700 dark:bg-zinc-800 sm:rounded-[28px]"
 
     const heroInnerClass =
-        "px-4 py-10 text-center sm:px-8 sm:py-14 md:px-10 md:py-16 lg:px-12 lg:py-20 xl:px-16 xl:py-24 2xl:px-20 2xl:py-28"
+        "px-3 py-4 sm:px-4 sm:py-5 md:px-5 md:py-6 lg:px-6 lg:py-6 xl:px-7 xl:py-7 2xl:px-8 2xl:py-8"
+
+    const heroGridClass =
+        "grid items-start gap-4 lg:grid-cols-[0.6fr_0.4fr] lg:gap-5"
 
     const heroTitleClass =
-        "mx-auto max-w-4xl text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl xl:text-6xl"
+        "max-w-4xl text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl md:text-6xl xl:text-7xl"
 
     const heroTextClass =
-        "mx-auto mt-4 max-w-xs text-sm leading-7 text-slate-700 sm:mt-6 sm:max-w-2xl sm:text-[15px] sm:leading-8 md:max-w-3xl md:text-base lg:text-lg lg:leading-9"
+        "mt-3 max-w-3xl text-base leading-8 text-slate-600 dark:text-zinc-300 sm:mt-4 sm:text-[17px] sm:leading-9 md:text-lg lg:text-[20px] lg:leading-10"
 
     const heroButtonsClass =
-        "mt-6 flex flex-col items-stretch justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center"
+        "flex flex-col items-stretch gap-2 sm:grid sm:grid-cols-2 sm:items-stretch"
 
     const primaryButtonClass =
-        "inline-flex min-h-[48px] items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:px-6"
+        "inline-flex h-[52px] w-full items-center justify-center rounded-xl border border-slate-950 bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
 
     const secondaryButtonClass =
-        "inline-flex min-h-[48px] items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 sm:px-6"
+        "inline-flex h-[52px] w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+
+    const quickStripClass =
+        "mt-4 grid gap-2 sm:grid-cols-2"
+
+    const quickItemClass =
+        "overflow-hidden rounded-xl border border-slate-200 bg-slate-50 dark:border-zinc-700 dark:bg-zinc-900"
+
+    const quickItemImageClass =
+        "h-[120px] w-full object-cover"
+
+    const quickItemTextClass =
+        "px-4 py-3 text-[15px] font-medium text-slate-700 dark:text-zinc-200"
+
+    const preServicesWrapClass =
+        "mt-4 grid gap-4 lg:grid-cols-3 sm:mt-5 lg:mt-6"
+
+    const preServicesCardClass =
+        "rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_10px_30px_rgba(15,23,42,0.06)] dark:border-zinc-700 dark:bg-zinc-800 sm:rounded-[28px] sm:p-5 lg:p-6"
+
+    const preServicesTitleClass =
+        "text-2xl font-bold text-slate-950 dark:text-white sm:text-[28px]"
+
+    const preServicesTextClass =
+        "mt-2 text-base leading-8 text-slate-600 dark:text-zinc-300 sm:text-[16px] sm:leading-9"
+
+    const bulletListClass =
+        "mt-3 space-y-2 text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9"
+
+    const bulletItemClass = "flex items-start gap-3"
+
+    const bulletDotClass =
+        "mt-[12px] h-2.5 w-2.5 shrink-0 rounded-full bg-slate-950 dark:bg-white"
+
+    const bulletCheckClass =
+        "mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white dark:bg-white dark:text-black"
+
+    const heroGalleryClass =
+        "mt-4 grid grid-cols-2 gap-2"
+
+    const heroGalleryCardClass =
+        "overflow-hidden rounded-xl border border-slate-200 bg-slate-50 dark:border-zinc-700 dark:bg-zinc-900"
+
+    const heroGalleryImageClass =
+        "h-[132px] w-full object-cover sm:h-[150px] lg:h-[138px] xl:h-[150px]"
 
     const containerClass =
-        "mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] sm:mt-8 sm:rounded-[28px] lg:mt-10"
+        "mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:border-zinc-700 dark:bg-zinc-800 sm:mt-5 sm:rounded-[28px] lg:mt-6"
 
     const titleWrapClass =
-        "border-b border-slate-200 px-4 py-6 sm:px-8 sm:py-8 md:px-10 lg:px-12"
+        "border-b border-slate-200 px-4 py-5 dark:border-zinc-700 sm:px-6 sm:py-6 md:px-8 lg:px-10"
 
     const titleClass =
-        "text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
+        "text-center text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl md:text-6xl"
 
     const contentClass =
-        "divide-y divide-slate-200"
+        "divide-y divide-slate-200 dark:divide-zinc-700"
 
     const sectionClass =
-        "scroll-mt-24 px-4 py-6 sm:px-8 sm:py-8 md:px-10 lg:px-12 xl:px-14"
+        "scroll-mt-24 px-4 py-5 sm:px-6 sm:py-6 md:px-8 lg:px-10 xl:px-12"
 
     const headingClass =
-        "mb-3 text-xl font-bold text-slate-900 sm:mb-4 sm:text-2xl md:text-[28px]"
+        "mb-3 text-2xl font-bold text-slate-950 dark:text-white sm:mb-4 sm:text-3xl md:text-[32px]"
 
     const textClass =
-        "text-sm leading-7 text-slate-700 whitespace-pre-line sm:text-[15px] sm:leading-8 md:text-base"
+        "whitespace-pre-line text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9 md:text-lg"
 
     const listClass =
-        "mt-4 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700 sm:pl-6 sm:text-[15px] sm:leading-8 md:text-base"
+        "mt-4 list-disc space-y-2 pl-5 text-base leading-8 text-slate-700 dark:text-zinc-200 sm:pl-6 sm:text-[16px] sm:leading-9 md:text-lg"
 
     return lang === "bg" ? (
         <div className={"scroll-smooth " + pageWrap}>
             <section id="home" className={heroClass}>
                 <div className={heroInnerClass}>
-                    <h1 className={heroTitleClass}>Никола Халачев Акаунтинг</h1>
-                    <p className={heroTextClass}>
-                        Професионално счетоводно обслужване, данъчни консултации, ТРЗ, правни и
-                        партньорски услуги за български и чуждестранни клиенти.
-                    </p>
+                    <div className={heroGridClass}>
+                        <div>
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                                <img
+                                    src="/images/fuckinghell.png"
+                                    alt="Nikola Halachev Accounting"
+                                    className="h-full w-full object-cover"
+                                />
+                            </div>
 
-                    <div className={heroButtonsClass}>
-                        <a href="#services" className={primaryButtonClass}>
-                            Виж услуги
-                        </a>
-                        <a href="#foreign-clients" className={secondaryButtonClass}>
-                            За чуждестранни клиенти
-                        </a>
+                            <div className="mt-4 lg:mt-5">
+                                <h1 className={heroTitleClass}>
+                                    Счетоводство без
+                                    <br />
+                                    излишен хаос
+                                </h1>
+
+                                <p className={heroTextClass}>
+                                    Текущо счетоводно обслужване, ТРЗ, данъчни консултации и съдействие
+                                    за български и чуждестранни клиенти. Ясен процес, подредена
+                                    комуникация и навременна информация за важните срокове и решения.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex h-full flex-col">
+                            <div>
+                                <div className={heroButtonsClass}>
+                                    <a href="#services" className={primaryButtonClass}>
+                                        Виж услуги
+                                    </a>
+                                    <a href="#foreign-clients" className={secondaryButtonClass}>
+                                        За чуждестранни клиенти
+                                    </a>
+                                </div>
+
+                                <div className={quickStripClass}>
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-accounting.jpg"
+                                            alt="Текущо счетоводно обслужване"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Текущо счетоводно обслужване
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-payroll.jpg"
+                                            alt="ТРЗ и администриране на персонал"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            ТРЗ и администриране на персонал
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-consulting.jpg"
+                                            alt="Данъчни и правни консултации"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Данъчни и правни консултации
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-startup.jpg"
+                                            alt="Съдействие за нови фирми"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Съдействие за нови фирми
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={heroGalleryClass}>
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-1.jpg"
+                                            alt="Placeholder 1"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-2.jpg"
+                                            alt="Placeholder 2"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-3.jpg"
+                                            alt="Placeholder 3"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-4.jpg"
+                                            alt="Placeholder 4"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-5 lg:mt-auto lg:pt-6">
+                                <div className="space-y-3">
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Навременна реакция по срокове и задължения
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Ясна и разбираема комуникация без излишно усложняване
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Практични решения според реалните нужди на бизнеса
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Подходящо за малък и среден бизнес, нови фирми, свободни
+                                            професии и чуждестранни клиенти
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className={preServicesWrapClass}>
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>Какво печелите</h2>
+                    <p className={preServicesTextClass}>
+                        Целта не е просто да се подадат документи, а да имате по-подреден процес и
+                        по-малко губене на време.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>По-ясна картина за текущите задължения</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Навременни действия по срокове и документи</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>По-малко хаос в ежедневната административна работа</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>С какво мога да помогна</h2>
+                    <p className={preServicesTextClass}>
+                        Подходът е практичен и ориентиран към реалната работа на фирмата.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Текущо счетоводно обслужване</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>ТРЗ и обслужване на персонал</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Консултации за развитие, оптимизация и организация</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>За кого е подходящо</h2>
+                    <p className={preServicesTextClass}>
+                        Услугите са насочени към хора и компании, които искат подреденост,
+                        предвидимост и нормална комуникация.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Собственици на фирми, които искат яснота</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Хора, които стартират нова дейност</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Чуждестранни клиенти, работещи в България</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -115,7 +366,7 @@ export default function Home() {
                     <section className={sectionClass} id="payroll">
                         <h2 className={headingClass}>ТРЗ</h2>
                         <p className={textClass}>
-{`За да спестим Вашите усилия да поддържате специфична компетентност и да гарантираме конфиденциалността на възнагражденията, ние осигуряваме възможно най-пълния сервиз по обслужване възнагражденията на Вашия персонал.`}
+{`За да спестя Вашите усилия да поддържате специфична компетентност и да гарантирам конфиденциалността на възнагражденията, предлагам възможно най-пълния сервиз по обслужване възнагражденията на Вашия персонал.`}
                         </p>
                         <ul className={listClass}>
                             <li>Изготвяне на трудови договори, граждански договори и договори за управление и контрол</li>
@@ -133,7 +384,7 @@ export default function Home() {
                     <section className={sectionClass} id="legal">
                         <h2 className={headingClass}>Правни услуги</h2>
                         <p className={textClass}>
-{`Акаунтинг Груп Бг може да Ви осигури правно обслужване в следните обалсти:`}
+{`Предлагам правно обслужване в следните области:`}
                         </p>
                         <ul className={listClass}>
                             <li>Регистрация и преобразуване на търговски дружества</li>
@@ -149,13 +400,13 @@ export default function Home() {
                     <section className={sectionClass} id="partners">
                         <h2 className={headingClass}>Партньорски услуги</h2>
                         <p className={textClass}>
-{`Като утвърдена счетоводна кантора Акаунтинг Груп Бг има изградени партньорства с водещи фирми от следни области, които нашите клиенти могат да използват при преференциални условия.`}
+{`Предлагам достъп и до партньорски услуги в различни области, които могат да бъдат полезни според конкретните нужди на клиента.`}
                         </p>
                         <ul className={listClass}>
                             <li>Правно обслужване</li>
                             <li>Трудова медица и ел.измервания</li>
                             <li>Преводи и легализация</li>
-                            <li>Счетоводен софтуер Питагор</li>
+                            <li>Счетоводен софтуер</li>
                         </ul>
                     </section>
 
@@ -210,19 +461,225 @@ export default function Home() {
         <div className={"scroll-smooth " + pageWrap}>
             <section id="home" className={heroClass}>
                 <div className={heroInnerClass}>
-                    <h1 className={heroTitleClass}>Nikola Halachev Accounting</h1>
-                    <p className={heroTextClass}>
-                        Professional accounting support, tax consultations, staff and payroll,
-                        legal and partnership services for Bulgarian and foreign clients.
-                    </p>
+                    <div className={heroGridClass}>
+                        <div>
+                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                                <img
+                                    src="/images/fuckinghell.png"
+                                    alt="Nikola Halachev Accounting"
+                                    className="h-full w-full object-cover"
+                                />
+                            </div>
 
-                    <div className={heroButtonsClass}>
-                        <a href="#services" className={primaryButtonClass}>
-                            View services
-                        </a>
-                        <a href="#foreign-clients" className={secondaryButtonClass}>
-                            For foreign clients
-                        </a>
+                            <div className="mt-4 lg:mt-5">
+                                <h1 className={heroTitleClass}>
+                                    Accounting without
+                                    <br />
+                                    the extra chaos
+                                </h1>
+
+                                <p className={heroTextClass}>
+                                    Ongoing accounting, payroll, tax consultations and support for
+                                    Bulgarian and foreign clients. A clear process, organized
+                                    communication and timely information when deadlines and decisions
+                                    matter.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex h-full flex-col">
+                            <div>
+                                <div className={heroButtonsClass}>
+                                    <a href="#services" className={primaryButtonClass}>
+                                        View services
+                                    </a>
+                                    <a href="#foreign-clients" className={secondaryButtonClass}>
+                                        For foreign clients
+                                    </a>
+                                </div>
+
+                                <div className={quickStripClass}>
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-accounting.jpg"
+                                            alt="Ongoing accounting support"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Ongoing accounting support
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-payroll.jpg"
+                                            alt="Payroll and staff administration"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Payroll and staff administration
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-consulting.jpg"
+                                            alt="Tax and legal consultations"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Tax and legal consultations
+                                        </div>
+                                    </div>
+
+                                    <div className={quickItemClass}>
+                                        <img
+                                            src="/images/service-startup.jpg"
+                                            alt="Support for new companies"
+                                            className={quickItemImageClass}
+                                        />
+                                        <div className={quickItemTextClass}>
+                                            Support for new companies
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={heroGalleryClass}>
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-1.jpg"
+                                            alt="Placeholder 1"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-2.jpg"
+                                            alt="Placeholder 2"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-3.jpg"
+                                            alt="Placeholder 3"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+
+                                    <div className={heroGalleryCardClass}>
+                                        <img
+                                            src="/images/placeholder-4.jpg"
+                                            alt="Placeholder 4"
+                                            className={heroGalleryImageClass}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-5 lg:mt-auto lg:pt-6">
+                                <div className="space-y-3">
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Timely action on deadlines and obligations
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Clear communication without unnecessary complexity
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Practical solutions based on real business needs
+                                        </span>
+                                    </div>
+
+                                    <div className={bulletItemClass}>
+                                        <span className={bulletCheckClass}>✓</span>
+                                        <span className="text-base leading-8 text-slate-700 dark:text-zinc-200 sm:text-[16px] sm:leading-9">
+                                            Suitable for small and medium business, new companies,
+                                            freelancers and foreign clients
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className={preServicesWrapClass}>
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>What you gain</h2>
+                    <p className={preServicesTextClass}>
+                        The goal is not just filing documents. It is having a cleaner process and
+                        wasting less time.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Clearer view of current obligations</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Timely action on deadlines and documentation</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Less chaos in daily administrative work</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>How I can help</h2>
+                    <p className={preServicesTextClass}>
+                        The approach is practical and focused on the actual day-to-day work of the
+                        business.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Ongoing accounting support</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Payroll and staff administration</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Consultations for growth, optimization and structure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={preServicesCardClass}>
+                    <h2 className={preServicesTitleClass}>Who it is for</h2>
+                    <p className={preServicesTextClass}>
+                        The service is aimed at people and companies that want order, predictability
+                        and normal communication.
+                    </p>
+                    <div className={bulletListClass}>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Business owners who want clarity</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>People starting a new activity</span>
+                        </div>
+                        <div className={bulletItemClass}>
+                            <span className={bulletDotClass}></span>
+                            <span>Foreign clients operating in Bulgaria</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -267,7 +724,7 @@ export default function Home() {
                     <section className={sectionClass} id="payroll">
                         <h2 className={headingClass}>Staff, wages and salaries</h2>
                         <p className={textClass}>
-{`In order to save your efforts to maintain specific competencies and ensure the confidentiality of wages, we provide the most complete service for your employees ‘ remuneration.`}
+{`To save you the effort of maintaining specific expertise and to ensure payroll confidentiality, I offer a complete service for managing employee remuneration.`}
                         </p>
                         <ul className={listClass}>
                             <li>Drafting of employment contracts, civil contracts and contracts for management and control</li>
@@ -285,7 +742,7 @@ export default function Home() {
                     <section className={sectionClass} id="legal">
                         <h2 className={headingClass}>Law consultations</h2>
                         <p className={textClass}>
-{`Accounting group BG can provide you with legal services in the following:`}
+{`I offer legal support in the following areas:`}
                         </p>
                         <ul className={listClass}>
                             <li>Registration and transformation of commercial companies</li>
@@ -301,13 +758,13 @@ export default function Home() {
                     <section className={sectionClass} id="partners">
                         <h2 className={headingClass}>Partnership Level Services</h2>
                         <p className={textClass}>
-{`As an established accounting company “Accounting Group BG” has built partnerships with leading companies from the following areas, which our clients can use on preferential terms.`}
+{`I also provide access to partner services across different areas that may be useful depending on the client’s specific needs.`}
                         </p>
                         <ul className={listClass}>
                             <li>Legal Services</li>
                             <li>Occupational Media and electrical measurements</li>
                             <li>Translation and legalization</li>
-                            <li>Pythagoras Accounting software</li>
+                            <li>Accounting software</li>
                         </ul>
                     </section>
 
