@@ -40,10 +40,10 @@ export default function Home() {
         "group overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900"
 
     const quickItemImageWrapClass =
-        "flex h-[120px] items-center justify-center overflow-hidden rounded-xl bg-slate-50 dark:bg-zinc-800 sm:h-[128px]"
+        "flex h-[120px] items-center justify-center overflow-hidden rounded-xl bg-transparent dark:bg-transparent sm:h-[128px]"
 
     const quickItemImageClass =
-        "max-h-[92px] w-auto object-contain transition duration-300 group-hover:scale-105 sm:max-h-[100px]"
+        "max-h-[110px] w-auto object-contain transition duration-300 group-hover:scale-125 sm:max-h-[120px]"
 
     const quickItemTextClass =
         "flex min-h-[72px] items-center justify-center px-2 pt-3 text-center text-[16px] font-semibold leading-7 text-slate-800 dark:text-zinc-100"
