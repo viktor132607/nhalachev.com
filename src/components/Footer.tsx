@@ -243,12 +243,12 @@ export default function Footer() {
                         </a>
 
                         <a
-                            href="mailto:contact@halachevaccounting.com"
+                            href="mailto:nthalachev@gmail.com"
                             className={contactLinkClass}
                         >
                             <span>Email:</span>
                             <span className="break-all sm:break-normal">
-                                contact@halachevaccounting.com
+                                nthalachev@gmail.com
                             </span>
                         </a>
                     </div>

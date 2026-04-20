@@ -147,9 +147,9 @@ export default function Navbar() {
                             className="inline-flex items-center justify-center"
                         >
                             <img
-                                src="/images/mainlogo.png"
+                                src={isDark ? "/images/mainlogo000.png" : "/images/mainlogo.png"}
                                 alt="Halachev Accounting"
-                                className="h-10 w-auto object-contain sm:h-11 md:h-12 lg:h-14 xl:h-16"
+                                className="block h-10 w-auto object-contain sm:h-11 md:h-12 lg:h-14 xl:h-16"
                             />
                         </button>
                     </div>
@@ -174,7 +174,11 @@ export default function Navbar() {
                             aria-label={isBg ? "Смени тема" : "Toggle theme"}
                         >
                             <img
+<<<<<<< HEAD
                                 src="/light-mode.svg"
+=======
+                                src="/images/light-mode.svg"
+>>>>>>> becd9f5 (nav bar fix)
                                 alt=""
                                 className={`h-[15px] w-[15px] object-contain transition duration-200 ${
                                     isDark ? "invert" : ""
