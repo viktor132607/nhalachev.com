@@ -34,18 +34,6 @@ export default function Home() {
         "inline-flex h-[52px] w-full items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
 
     const quickStripClass =
-<<<<<<< HEAD
-        "mt-4 grid gap-2 sm:grid-cols-2"
-
-    const quickItemClass =
-        "overflow-hidden rounded-xl border border-slate-200 bg-slate-50 dark:border-zinc-700 dark:bg-zinc-900"
-
-    const quickItemImageClass =
-        "h-[120px] w-full object-cover"
-
-    const quickItemTextClass =
-        "px-4 py-3 text-[15px] font-medium text-slate-700 dark:text-zinc-200"
-=======
         "mt-4 grid gap-3 sm:grid-cols-2"
 
     const quickItemClass =
@@ -59,7 +47,6 @@ export default function Home() {
 
     const quickItemTextClass =
         "flex min-h-[72px] items-center justify-center px-2 pt-3 text-center text-[16px] font-semibold leading-7 text-slate-800 dark:text-zinc-100"
->>>>>>> becd9f5 (nav bar fix)
 
     const preServicesWrapClass =
         "mt-4 grid gap-4 lg:grid-cols-3 sm:mt-5 lg:mt-6"
@@ -83,18 +70,6 @@ export default function Home() {
 
     const bulletCheckClass =
         "mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white dark:bg-white dark:text-black"
-<<<<<<< HEAD
-
-    const heroGalleryClass =
-        "mt-4 grid grid-cols-2 gap-2"
-
-    const heroGalleryCardClass =
-        "overflow-hidden rounded-xl border border-slate-200 bg-slate-50 dark:border-zinc-700 dark:bg-zinc-900"
-
-    const heroGalleryImageClass =
-        "h-[132px] w-full object-cover sm:h-[150px] lg:h-[138px] xl:h-[150px]"
-=======
->>>>>>> becd9f5 (nav bar fix)
 
     const containerClass =
         "mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:border-zinc-700 dark:bg-zinc-800 sm:mt-5 sm:rounded-[28px] lg:mt-6"
@@ -162,13 +137,6 @@ export default function Home() {
 
                                 <div className={quickStripClass}>
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-accounting.jpg"
-                                            alt="Текущо счетоводно обслужване"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_left_centered.png"
@@ -176,20 +144,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Текущо счетоводно обслужване
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-payroll.jpg"
-                                            alt="ТРЗ и администриране на персонал"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_right_centered.png"
@@ -197,20 +157,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             ТРЗ и администриране на персонал
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-consulting.jpg"
-                                            alt="Данъчни и правни консултации"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_left_centered.png"
@@ -218,20 +170,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Данъчни и правни консултации
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-startup.jpg"
-                                            alt="Съдействие за нови фирми"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_right_centered.png"
@@ -239,49 +183,11 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Съдействие за нови фирми
                                         </div>
                                     </div>
                                 </div>
-<<<<<<< HEAD
-
-                                <div className={heroGalleryClass}>
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-1.jpg"
-                                            alt="Placeholder 1"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-2.jpg"
-                                            alt="Placeholder 2"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-3.jpg"
-                                            alt="Placeholder 3"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-4.jpg"
-                                            alt="Placeholder 4"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-                                </div>
-=======
->>>>>>> becd9f5 (nav bar fix)
                             </div>
 
                             <div className="mt-5 lg:mt-auto lg:pt-6">
@@ -562,13 +468,6 @@ export default function Home() {
 
                                 <div className={quickStripClass}>
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-accounting.jpg"
-                                            alt="Ongoing accounting support"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_left_centered.png"
@@ -576,20 +475,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Ongoing accounting support
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-payroll.jpg"
-                                            alt="Payroll and staff administration"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_right_centered.png"
@@ -597,20 +488,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Payroll and staff administration
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-consulting.jpg"
-                                            alt="Tax and legal consultations"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_left_centered.png"
@@ -618,20 +501,12 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Tax and legal consultations
                                         </div>
                                     </div>
 
                                     <div className={quickItemClass}>
-<<<<<<< HEAD
-                                        <img
-                                            src="/images/service-startup.jpg"
-                                            alt="Support for new companies"
-                                            className={quickItemImageClass}
-                                        />
-=======
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_right_centered.png"
@@ -639,49 +514,11 @@ export default function Home() {
                                                 className={quickItemImageClass}
                                             />
                                         </div>
->>>>>>> becd9f5 (nav bar fix)
                                         <div className={quickItemTextClass}>
                                             Support for new companies
                                         </div>
                                     </div>
                                 </div>
-<<<<<<< HEAD
-
-                                <div className={heroGalleryClass}>
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-1.jpg"
-                                            alt="Placeholder 1"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-2.jpg"
-                                            alt="Placeholder 2"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-3.jpg"
-                                            alt="Placeholder 3"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-
-                                    <div className={heroGalleryCardClass}>
-                                        <img
-                                            src="/images/placeholder-4.jpg"
-                                            alt="Placeholder 4"
-                                            className={heroGalleryImageClass}
-                                        />
-                                    </div>
-                                </div>
-=======
->>>>>>> becd9f5 (nav bar fix)
                             </div>
 
                             <div className="mt-5 lg:mt-auto lg:pt-6">

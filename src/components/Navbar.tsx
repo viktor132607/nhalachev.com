@@ -174,11 +174,7 @@ export default function Navbar() {
                             aria-label={isBg ? "Смени тема" : "Toggle theme"}
                         >
                             <img
-<<<<<<< HEAD
-                                src="/light-mode.svg"
-=======
                                 src="/images/light-mode.svg"
->>>>>>> becd9f5 (nav bar fix)
                                 alt=""
                                 className={`h-[15px] w-[15px] object-contain transition duration-200 ${
                                     isDark ? "invert" : ""
