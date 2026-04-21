@@ -7,7 +7,7 @@ export default function About() {
     const isBg = i18n.language?.toLowerCase().startsWith("bg")
 
     const pageWrap =
-        "mx-auto w-full max-w-[1280px] px-4 pb-0 pt-0 sm:px-5 md:px-6 lg:px-8 xl:px-10"
+    "mx-auto w-full max-w-[1280px] px-4 pt-0 sm:px-5 md:px-6 lg:px-8 xl:px-10"
 
     const contentWrapClass =
         "overflow-hidden border-x border-b border-slate-200 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:p-6 lg:p-8 xl:p-10"

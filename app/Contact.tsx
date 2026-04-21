@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import {
+    COOKIE_CONSENT_EVENT,
+    hasAcceptedOptionalCookies,
+} from "../src/lib/cookies"
 
 const THEME_KEY = "theme"
 
@@ -11,6 +15,7 @@ export default function Contact() {
     const isBg = lang.startsWith("bg")
 
     const [isDark, setIsDark] = useState(false)
+    const [hasOptionalCookies, setHasOptionalCookies] = useState(false)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
@@ -36,37 +41,50 @@ export default function Contact() {
         }
     }, [])
 
+    useEffect(() => {
+        const syncConsent = () => {
+            setHasOptionalCookies(hasAcceptedOptionalCookies())
+        }
+
+        syncConsent()
+        window.addEventListener(COOKIE_CONSENT_EVENT, syncConsent)
+
+        return () => {
+            window.removeEventListener(COOKIE_CONSENT_EVENT, syncConsent)
+        }
+    }, [])
+
     const pageClass =
-        "mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12 2xl:px-16"
+        "mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-5 sm:py-6 md:px-6 md:py-8 lg:px-8 lg:py-10 xl:px-10"
 
     const heroClass =
-        "mb-6 rounded-[24px] border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:mb-8 sm:rounded-[28px] sm:px-8 sm:py-10 lg:mb-10 lg:rounded-[32px] lg:px-10 lg:py-12 xl:px-12"
+        "mb-5 rounded-[22px] border border-slate-200 bg-white px-5 py-7 text-center shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:mb-6 sm:rounded-[26px] sm:px-7 sm:py-9 lg:mb-8 lg:rounded-[30px] lg:px-10 lg:py-10"
 
     const cardClass =
-        "rounded-[22px] border border-slate-200 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:rounded-[24px] sm:p-6 lg:rounded-[28px] lg:p-8"
+        "rounded-[20px] border border-slate-200 bg-white p-4 shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:rounded-[24px] sm:p-5 lg:rounded-[28px] lg:p-7"
 
     const sectionTitleClass =
-        "text-[24px] font-bold text-slate-950 dark:text-white sm:text-[28px] lg:text-[30px]"
+        "text-[22px] font-bold text-slate-950 dark:text-white sm:text-[26px] lg:text-[30px]"
 
     const textClass =
-        "text-[15px] leading-8 text-slate-700 dark:text-zinc-200 sm:text-base lg:text-[17px]"
+        "text-[15px] leading-7 text-slate-700 dark:text-zinc-200 sm:text-base sm:leading-8"
 
     const linkClass =
-        "block text-[15px] leading-8 font-semibold text-slate-700 transition hover:text-slate-950 dark:text-zinc-200 dark:hover:text-white sm:text-base"
+        "block text-[15px] leading-7 font-semibold text-slate-700 transition hover:text-slate-950 dark:text-zinc-200 dark:hover:text-white sm:text-base sm:leading-8"
 
     const inputClass =
         "w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:ring-0 dark:border-zinc-600 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-zinc-400"
 
-    const textareaClass = `${inputClass} min-h-[180px] resize-y`
+    const textareaClass = `${inputClass} min-h-[170px] resize-y sm:min-h-[190px]`
 
     const submitButtonClass =
-        "inline-flex min-h-[48px] items-center justify-center rounded-full border border-slate-950 bg-slate-950 px-6 py-3 text-center text-sm font-bold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
+        "inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-slate-950 bg-slate-950 px-6 py-3 text-center text-sm font-bold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
 
     const secondaryButtonClass =
-        "inline-flex min-h-[46px] items-center justify-center rounded-full border border-slate-950 bg-slate-950 px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-slate-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
+        "inline-flex min-h-[46px] w-full items-center justify-center rounded-full border border-slate-950 bg-slate-950 px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-slate-800 sm:w-auto dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
 
     const socialChipClass =
-        "inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-100 hover:shadow-md dark:border-[#111111] dark:bg-[#000000] dark:text-white dark:hover:border-[#222222] dark:hover:bg-[#111111]"
+        "inline-flex min-h-[52px] items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-100 hover:shadow-md dark:border-[#111111] dark:bg-[#000000] dark:text-white dark:hover:border-[#222222] dark:hover:bg-[#111111]"
 
     const socialIconBoxClass =
         "inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-transparent"
@@ -136,10 +154,24 @@ export default function Contact() {
         }
     }
 
+    const mapPlaceholder = isBg ? (
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-8 text-center dark:border-zinc-700 dark:bg-zinc-900 sm:rounded-[22px] lg:rounded-[24px]">
+            <p className="max-w-md text-sm leading-7 text-slate-700 dark:text-zinc-200 sm:text-[15px]">
+                За да заредите Google Maps, приемете optional cookies от банера за бисквитки.
+            </p>
+        </div>
+    ) : (
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-8 text-center dark:border-zinc-700 dark:bg-zinc-900 sm:rounded-[22px] lg:rounded-[24px]">
+            <p className="max-w-md text-sm leading-7 text-slate-700 dark:text-zinc-200 sm:text-[15px]">
+                To load Google Maps, accept optional cookies from the cookie banner.
+            </p>
+        </div>
+    )
+
     return isBg ? (
         <div className={pageClass}>
             <section className={heroClass}>
-                <h1 className="mb-4 text-[32px] font-bold tracking-tight text-slate-950 dark:text-white sm:text-[42px] lg:text-[52px]">
+                <h1 className="mb-4 text-[30px] font-bold tracking-tight text-slate-950 dark:text-white sm:text-[40px] lg:text-[50px]">
                     Никола Халачев
                 </h1>
                 <p className="mx-auto max-w-3xl text-[15px] leading-7 text-slate-600 dark:text-zinc-300 sm:text-[17px] sm:leading-8 lg:text-[18px]">
@@ -148,8 +180,8 @@ export default function Contact() {
             </section>
 
             <section>
-                <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-                    <div className="flex flex-col gap-8">
+                <div className="grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.92fr)] xl:gap-8">
+                    <div className="flex flex-col gap-6 xl:gap-8">
                         <div className={cardClass}>
                             <h2 className={sectionTitleClass}>Форма за контакт</h2>
 
@@ -352,13 +384,19 @@ export default function Contact() {
                                 </p>
                             </div>
 
-                            <div className="mt-5 overflow-hidden rounded-[20px] border border-slate-200 dark:border-zinc-700 sm:rounded-[22px] lg:rounded-[24px]">
-                                <iframe
-                                    className="h-[300px] w-full border-0"
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    src="https://www.google.com/maps?hl=bg&q=ул.%20Архитект%20Петко%20Момчилов%2024,%20Варна%209000&z=17&output=embed"
-                                />
+                            <div className="mt-5">
+                                {hasOptionalCookies ? (
+                                    <div className="overflow-hidden rounded-[20px] border border-slate-200 dark:border-zinc-700 sm:rounded-[22px] lg:rounded-[24px]">
+                                        <iframe
+                                            className="h-[300px] w-full border-0 sm:h-[340px] lg:h-[380px]"
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                            src="https://www.google.com/maps?hl=bg&q=ул.%20Архитект%20Петко%20Момчилов%2024,%20Варна%209000&z=17&output=embed"
+                                        />
+                                    </div>
+                                ) : (
+                                    mapPlaceholder
+                                )}
                             </div>
 
                             <div className="mt-5">
@@ -379,7 +417,7 @@ export default function Contact() {
     ) : (
         <div className={pageClass}>
             <section className={heroClass}>
-                <h1 className="mb-4 text-[32px] font-bold tracking-tight text-slate-950 dark:text-white sm:text-[42px] lg:text-[52px]">
+                <h1 className="mb-4 text-[30px] font-bold tracking-tight text-slate-950 dark:text-white sm:text-[40px] lg:text-[50px]">
                     Nikola Halachev
                 </h1>
                 <p className="mx-auto max-w-3xl text-[15px] leading-7 text-slate-600 dark:text-zinc-300 sm:text-[17px] sm:leading-8 lg:text-[18px]">
@@ -388,8 +426,8 @@ export default function Contact() {
             </section>
 
             <section>
-                <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-                    <div className="flex flex-col gap-8">
+                <div className="grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.92fr)] xl:gap-8">
+                    <div className="flex flex-col gap-6 xl:gap-8">
                         <div className={cardClass}>
                             <h2 className={sectionTitleClass}>Contact form</h2>
 
@@ -592,13 +630,19 @@ export default function Contact() {
                                 </p>
                             </div>
 
-                            <div className="mt-5 overflow-hidden rounded-[20px] border border-slate-200 dark:border-zinc-700 sm:rounded-[22px] lg:rounded-[24px]">
-                                <iframe
-                                    className="h-[300px] w-full border-0"
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    src="https://www.google.com/maps?hl=bg&q=ул.%20Архитект%20Петко%20Момчилов%2024,%20Варна%209000&z=17&output=embed"
-                                />
+                            <div className="mt-5">
+                                {hasOptionalCookies ? (
+                                    <div className="overflow-hidden rounded-[20px] border border-slate-200 dark:border-zinc-700 sm:rounded-[22px] lg:rounded-[24px]">
+                                        <iframe
+                                            className="h-[300px] w-full border-0 sm:h-[340px] lg:h-[380px]"
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                            src="https://www.google.com/maps?hl=bg&q=ул.%20Архитект%20Петко%20Момчилов%2024,%20Варна%209000&z=17&output=embed"
+                                        />
+                                    </div>
+                                ) : (
+                                    mapPlaceholder
+                                )}
                             </div>
 
                             <div className="mt-5">

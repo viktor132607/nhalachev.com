@@ -34,7 +34,7 @@ export default function Footer() {
     const t = isBg
         ? {
               description: "Професионално счетоводно обслужване и консултации. Налични 24/7.",
-              company: "Фирма",
+              company: "Страници",
               info: "Информация",
               home: "Начало",
               about: "За мен",
@@ -47,7 +47,7 @@ export default function Footer() {
           }
         : {
               description: "Professional accounting & consulting services. Available 24/7.",
-              company: "Company",
+              company: "Pages",
               info: "Legal",
               home: "Home",
               about: "About Me",

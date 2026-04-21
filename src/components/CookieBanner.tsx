@@ -1,30 +1,39 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
-const CONSENT_KEY = "cookie_consent"
+import {
+    COOKIE_CONSENT_EVENT,
+    getCookieConsent,
+    setCookieConsent,
+} from "../lib/cookies"
 
 export default function CookieBanner() {
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
-        const saved = localStorage.getItem(CONSENT_KEY)
-        if (!saved) {
-            setVisible(true)
-        }
+        const saved = getCookieConsent()
+        setVisible(!saved)
     }, [])
 
     const acceptCookies = () => {
-        localStorage.setItem(CONSENT_KEY, "accepted")
+        setCookieConsent("accepted")
         setVisible(false)
-        window.dispatchEvent(new Event("cookieconsentchange"))
     }
 
     const rejectCookies = () => {
-        localStorage.setItem(CONSENT_KEY, "rejected")
+        setCookieConsent("rejected")
         setVisible(false)
-        window.dispatchEvent(new Event("cookieconsentchange"))
     }
+
+    useEffect(() => {
+        const syncBanner = () => {
+            const saved = getCookieConsent()
+            setVisible(!saved)
+        }
+
+        window.addEventListener(COOKIE_CONSENT_EVENT, syncBanner)
+        return () => window.removeEventListener(COOKIE_CONSENT_EVENT, syncBanner)
+    }, [])
 
     if (!visible) return null
 
@@ -36,7 +45,8 @@ export default function CookieBanner() {
                         Бисквитки
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-white/80">
-                        Този сайт използва бисквитки за правилна работа и по-добро потребителско изживяване.
+                        Този сайт използва задължителни бисквитки за правилна работа и optional
+                        бисквитки за външно съдържание и по-добро потребителско изживяване.
                     </p>
                 </div>
 
