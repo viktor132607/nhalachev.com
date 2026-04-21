@@ -4,6 +4,7 @@ import "./globals.css"
 import ClientProviders from "../src/components/ClientProviders"
 import Navbar from "../src/components/Navbar"
 import Footer from "../src/components/Footer"
+import CookieBanner from "../src/components/CookieBanner"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -18,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Halachev Accounting",
     description: "Accounting services by Nikola Halachev",
+    icons: {
+        icon: "/images/mainlogo.png",
+    },
 }
 
 const themeScript = `
@@ -44,6 +48,7 @@ export default function RootLayout({
                     <Navbar />
                     <main>{children}</main>
                     <Footer />
+                    <CookieBanner />
                 </ClientProviders>
             </body>
         </html>

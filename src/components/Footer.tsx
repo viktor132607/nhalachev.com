@@ -1,9 +1,35 @@
 "use client"
 
 import Link from "next/link"
+import { useEffect, useState } from "react"
+
+const THEME_KEY = "theme"
 
 export default function Footer() {
+    const [mounted, setMounted] = useState(false)
+    const [isDark, setIsDark] = useState(false)
     const isBg = true
+
+    useEffect(() => {
+        setMounted(true)
+
+        const savedTheme = localStorage.getItem(THEME_KEY)
+        const dark = savedTheme === "dark"
+
+        document.documentElement.classList.toggle("dark", dark)
+        setIsDark(dark)
+
+        const handleThemeChange = () => {
+            const nextDark = document.documentElement.classList.contains("dark")
+            setIsDark(nextDark)
+        }
+
+        window.addEventListener("themechange", handleThemeChange)
+
+        return () => {
+            window.removeEventListener("themechange", handleThemeChange)
+        }
+    }, [])
 
     const t = isBg
         ? {
@@ -17,6 +43,7 @@ export default function Footer() {
               terms: "Общи условия",
               cookies: "Политика за бисквитките",
               rights: "Всички права запазени.",
+              createdBy: "Created by",
           }
         : {
               description: "Professional accounting & consulting services. Available 24/7.",
@@ -29,10 +56,11 @@ export default function Footer() {
               terms: "Terms of Service",
               cookies: "Cookie Policy",
               rights: "All rights reserved.",
+              createdBy: "Created by",
           }
 
-    const footerClass =
-        "mt-10 border-t border-slate-200 bg-white dark:border-white/10 dark:bg-slate-950"
+const footerClass =
+    "border-t border-slate-200 bg-white dark:border-[#111111] dark:bg-[#000000]"
 
     const wrapperClass =
         "mx-auto max-w-[1600px] px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
@@ -44,19 +72,22 @@ export default function Footer() {
         "min-w-0 max-w-none md:max-w-md"
 
     const logoClass =
-        "h-10 w-auto object-contain sm:h-11 md:h-12 xl:h-14"
+        `h-10 w-auto object-contain sm:h-11 md:h-12 xl:h-14 ${mounted && isDark ? "invert" : ""}`
 
     const descriptionClass =
-        "mt-4 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-[15px] sm:leading-7"
+        "mt-4 max-w-md text-sm leading-6 text-slate-600 dark:text-white/80 sm:text-[15px] sm:leading-7"
 
     const socialsWrapClass =
         "mt-5 flex flex-wrap items-center gap-2.5 sm:gap-3"
 
     const socialClass =
-        "inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white transition hover:scale-105 hover:border-slate-300 dark:border-white/10 dark:bg-slate-900 dark:hover:border-white/20 sm:h-11 sm:w-11"
+        "inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white transition hover:scale-105 hover:border-slate-300 dark:border-[#111111] dark:bg-[#111111] dark:hover:border-white/20 sm:h-11 sm:w-11"
 
     const fullIconClass =
-        "h-full w-full rounded-full object-contain p-[1px]"
+        `h-full w-full rounded-full object-contain p-[1px] ${mounted && isDark ? "invert" : ""}`
+
+    const tikTokIconClass =
+        `h-full w-full rounded-full object-contain ${mounted && isDark ? "invert" : ""}`
 
     const linksGridClass =
         "grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:justify-self-end xl:gap-14"
@@ -65,10 +96,10 @@ export default function Footer() {
         "mb-3 text-sm font-semibold text-slate-900 dark:text-white sm:text-[15px]"
 
     const linksWrapClass =
-        "flex flex-col gap-2 text-sm text-slate-600 dark:text-slate-300 sm:text-[15px]"
+        "flex flex-col gap-2 text-sm text-slate-600 dark:text-white/80 sm:text-[15px]"
 
     const bottomBarClass =
-        "mt-8 flex flex-col gap-5 border-t border-slate-200 pt-6 text-sm text-slate-500 dark:border-white/10 dark:text-slate-400 lg:flex-row lg:items-center lg:justify-between lg:gap-6"
+        "mt-8 flex flex-col gap-5 border-t border-slate-200 pt-6 text-sm text-slate-500 dark:border-[#111111] dark:text-white/70 lg:flex-row lg:items-center lg:justify-between lg:gap-6"
 
     const copyrightClass =
         "text-sm leading-6"
@@ -78,6 +109,9 @@ export default function Footer() {
 
     const contactLinkClass =
         "inline-flex min-w-0 items-center gap-2 text-sm leading-6 transition hover:text-slate-900 dark:hover:text-white"
+
+    const createdByClass =
+        "mt-4 text-sm leading-6 text-slate-500 dark:text-white/70"
 
     return (
         <footer className={footerClass}>
@@ -147,7 +181,7 @@ export default function Footer() {
                                 <img
                                     src="/images/tik-tok_4817846.png"
                                     alt="TikTok"
-                                    className="h-full w-full rounded-full object-contain"
+                                    className={tikTokIconClass}
                                 />
                             </a>
 
@@ -191,6 +225,18 @@ export default function Footer() {
                                 />
                             </a>
                         </div>
+
+                        <p className={createdByClass}>
+                            {t.createdBy}{" "}
+                            <a
+                                href="https://github.com/viktor132607"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold transition hover:text-slate-900 dark:hover:text-white"
+                            >
+                                viktor132607
+                            </a>
+                        </p>
                     </div>
 
                     <div className={linksGridClass}>

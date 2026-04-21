@@ -1,13 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+
+const THEME_KEY = "theme"
 
 export default function Contact() {
     const { i18n } = useTranslation()
     const lang = i18n.language?.toLowerCase() ?? "bg"
     const isBg = lang.startsWith("bg")
 
+    const [isDark, setIsDark] = useState(false)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
@@ -17,14 +20,30 @@ export default function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitMessage, setSubmitMessage] = useState("")
 
+    useEffect(() => {
+        const syncTheme = () => {
+            const dark =
+                document.documentElement.classList.contains("dark") ||
+                localStorage.getItem(THEME_KEY) === "dark"
+            setIsDark(dark)
+        }
+
+        syncTheme()
+        window.addEventListener("themechange", syncTheme)
+
+        return () => {
+            window.removeEventListener("themechange", syncTheme)
+        }
+    }, [])
+
     const pageClass =
         "mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 xl:px-12 2xl:px-16"
 
     const heroClass =
-        "mb-6 rounded-[24px] border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-zinc-700 dark:bg-zinc-800 sm:mb-8 sm:rounded-[28px] sm:px-8 sm:py-10 lg:mb-10 lg:rounded-[32px] lg:px-10 lg:py-12 xl:px-12"
+        "mb-6 rounded-[24px] border border-slate-200 bg-white px-5 py-8 text-center shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:mb-8 sm:rounded-[28px] sm:px-8 sm:py-10 lg:mb-10 lg:rounded-[32px] lg:px-10 lg:py-12 xl:px-12"
 
     const cardClass =
-        "rounded-[22px] border border-slate-200 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-zinc-700 dark:bg-zinc-800 sm:rounded-[24px] sm:p-6 lg:rounded-[28px] lg:p-8"
+        "rounded-[22px] border border-slate-200 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.04)] dark:border-[#111111] dark:bg-[#2a2a2e] sm:rounded-[24px] sm:p-6 lg:rounded-[28px] lg:p-8"
 
     const sectionTitleClass =
         "text-[24px] font-bold text-slate-950 dark:text-white sm:text-[28px] lg:text-[30px]"
@@ -47,7 +66,25 @@ export default function Contact() {
         "inline-flex min-h-[46px] items-center justify-center rounded-full border border-slate-950 bg-slate-950 px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-slate-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
 
     const socialChipClass =
-        "inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+        "inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-100 hover:shadow-md dark:border-[#111111] dark:bg-[#000000] dark:text-white dark:hover:border-[#222222] dark:hover:bg-[#111111]"
+
+    const socialIconBoxClass =
+        "inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-transparent"
+
+    const normalIconClass =
+        "h-full w-full rounded-full object-contain p-[1px]"
+
+    const invertedIconClass =
+        "h-full w-full rounded-full object-contain p-[1px] invert"
+
+    const normalTikTokIconClass =
+        "h-full w-full rounded-full object-contain"
+
+    const invertedTikTokIconClass =
+        "h-full w-full rounded-full object-contain invert"
+
+    const iconClass = isDark ? invertedIconClass : normalIconClass
+    const tikTokIconClass = isDark ? invertedTikTokIconClass : normalTikTokIconClass
 
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -232,81 +269,51 @@ export default function Contact() {
                             <h2 className={sectionTitleClass}>Социални мрежи</h2>
 
                             <div className="mt-5 flex flex-wrap gap-3">
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.facebook.com/profile.php?id=61565641385893"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/facebook.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=61565641385893">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/facebook.png" alt="Facebook" className={iconClass} />
                                     </span>
                                     Facebook
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://m.me/halachev_accounting"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/messenger.webp" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://m.me/halachev_accounting">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/messenger.png" alt="Messenger" className={iconClass} />
                                     </span>
                                     Messenger
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.instagram.com/halachev_accounting/"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/instagram.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/halachev_accounting/">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/black_15047119.png" alt="Instagram" className={iconClass} />
                                     </span>
                                     Instagram
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.tiktok.com/@halachev_accounting"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/tiktok.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@halachev_accounting">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/tik-tok_4817846.png" alt="TikTok" className={tikTokIconClass} />
                                     </span>
                                     TikTok
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://wa.me/359887764200"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/whatsapp.jpg" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://wa.me/359887764200">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/1384007.png" alt="WhatsApp" className={iconClass} />
                                     </span>
                                     WhatsApp
                                 </a>
 
                                 <a className={socialChipClass} href="viber://chat?number=%2B359887764200">
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/viber1.png" alt="" />
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/viber.png" alt="Viber" className={iconClass} />
                                     </span>
                                     Viber
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://revolut.me/halachev"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/revolut.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://revolut.me/halachev">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/revolut.png" alt="Revolut" className={iconClass} />
                                     </span>
                                     Revolut
                                 </a>
@@ -321,10 +328,7 @@ export default function Contact() {
                                 <a className={`${linkClass} break-all`} href="mailto:nthalachev@gmail.com">
                                     nthalachev@gmail.com
                                 </a>
-                                <a
-                                    className={`${linkClass} break-all`}
-                                    href="mailto:nikolahalachev2811@gmail.com"
-                                >
+                                <a className={`${linkClass} break-all`} href="mailto:nikolahalachev2811@gmail.com">
                                     nikolahalachev2811@gmail.com
                                 </a>
                             </div>
@@ -505,81 +509,51 @@ export default function Contact() {
                             <h2 className={sectionTitleClass}>Social links</h2>
 
                             <div className="mt-5 flex flex-wrap gap-3">
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.facebook.com/profile.php?id=61565641385893"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/facebook.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=61565641385893">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/facebook.png" alt="Facebook" className={iconClass} />
                                     </span>
                                     Facebook
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://m.me/halachev_accounting"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/messenger.webp" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://m.me/halachev_accounting">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/messenger.png" alt="Messenger" className={iconClass} />
                                     </span>
                                     Messenger
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.instagram.com/halachev_accounting/"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/instagram.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/halachev_accounting/">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/black_15047119.png" alt="Instagram" className={iconClass} />
                                     </span>
                                     Instagram
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://www.tiktok.com/@halachev_accounting"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/tiktok.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@halachev_accounting">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/tik-tok_4817846.png" alt="TikTok" className={tikTokIconClass} />
                                     </span>
                                     TikTok
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://wa.me/359887764200"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/whatsapp.jpg" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://wa.me/359887764200">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/1384007.png" alt="WhatsApp" className={iconClass} />
                                     </span>
                                     WhatsApp
                                 </a>
 
                                 <a className={socialChipClass} href="viber://chat?number=%2B359887764200">
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/viber1.png" alt="" />
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/viber.png" alt="Viber" className={iconClass} />
                                     </span>
                                     Viber
                                 </a>
 
-                                <a
-                                    className={socialChipClass}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="https://revolut.me/halachev"
-                                >
-                                    <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-slate-100 dark:bg-zinc-800">
-                                        <img className="h-5 w-5 object-contain" src="/images/revolut.png" alt="" />
+                                <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://revolut.me/halachev">
+                                    <span className={socialIconBoxClass}>
+                                        <img src="/images/revolut.png" alt="Revolut" className={iconClass} />
                                     </span>
                                     Revolut
                                 </a>
@@ -594,10 +568,7 @@ export default function Contact() {
                                 <a className={`${linkClass} break-all`} href="mailto:nthalachev@gmail.com">
                                     nthalachev@gmail.com
                                 </a>
-                                <a
-                                    className={`${linkClass} break-all`}
-                                    href="mailto:nikolahalachev2811@gmail.com"
-                                >
+                                <a className={`${linkClass} break-all`} href="mailto:nikolahalachev2811@gmail.com">
                                     nikolahalachev2811@gmail.com
                                 </a>
                             </div>

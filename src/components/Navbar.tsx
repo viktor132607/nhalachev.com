@@ -13,6 +13,7 @@ export default function Navbar() {
     const router = useRouter()
     const [mounted, setMounted] = useState(false)
     const [isDark, setIsDark] = useState(false)
+    const [servicesActive, setServicesActive] = useState(false)
 
     useEffect(() => {
         setMounted(true)
@@ -28,6 +29,35 @@ export default function Navbar() {
         document.documentElement.classList.toggle("dark", dark)
         setIsDark(dark)
     }, [i18n])
+
+    useEffect(() => {
+        if (pathname !== "/") {
+            setServicesActive(false)
+            return
+        }
+
+        const updateServicesActive = () => {
+            const section = document.getElementById("services")
+            if (!section) {
+                setServicesActive(false)
+                return
+            }
+
+            const rect = section.getBoundingClientRect()
+            const triggerOffset = 140
+            const isActive = rect.top <= triggerOffset && rect.bottom > triggerOffset
+            setServicesActive(isActive)
+        }
+
+        updateServicesActive()
+        window.addEventListener("scroll", updateServicesActive, { passive: true })
+        window.addEventListener("resize", updateServicesActive)
+
+        return () => {
+            window.removeEventListener("scroll", updateServicesActive)
+            window.removeEventListener("resize", updateServicesActive)
+        }
+    }, [pathname])
 
     const isBg = mounted ? i18n.language?.toLowerCase().startsWith("bg") : true
 
@@ -111,11 +141,10 @@ export default function Navbar() {
                 : "text-slate-400 hover:text-slate-700 dark:text-zinc-500 dark:hover:text-zinc-200"
         }`
 
-    const homeActive = pathname === "/"
-    const servicesActive = false
+    const homeActive = pathname === "/" && !servicesActive
 
     return (
-        <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
+        <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">
             <div className="mx-auto max-w-[1600px] px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
                 <div className="grid min-h-[72px] grid-cols-1 items-center gap-y-3 py-3 sm:min-h-[80px] sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
                     <div className="order-2 flex items-center justify-center gap-5 sm:gap-6 lg:order-1 lg:justify-end lg:gap-8">
@@ -147,9 +176,11 @@ export default function Navbar() {
                             className="inline-flex items-center justify-center"
                         >
                             <img
-                                src={isDark ? "/images/mainlogo000.png" : "/images/mainlogo.png"}
+                                src="/images/mainlogo.png"
                                 alt="Halachev Accounting"
-                                className="block h-10 w-auto object-contain sm:h-11 md:h-12 lg:h-14 xl:h-16"
+                                className={`block h-10 w-auto object-contain transition sm:h-11 md:h-12 lg:h-14 xl:h-16 ${
+                                    isDark ? "invert" : ""
+                                }`}
                             />
                         </button>
                     </div>
@@ -166,11 +197,11 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    <div className="order-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-200 pt-3 sm:gap-4 lg:order-4 lg:justify-end lg:border-t-0 lg:pt-0 dark:border-zinc-800">
+                    <div className="order-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-200 pt-3 sm:gap-4 lg:order-4 lg:justify-end lg:border-t-0 lg:pt-0 dark:border-[#111111]">
                         <button
                             type="button"
                             onClick={toggleTheme}
-                            className="flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-transparent transition hover:border-neutral-200 hover:bg-neutral-100 dark:hover:border-white/10 dark:hover:bg-zinc-900"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-transparent transition hover:border-neutral-200 hover:bg-neutral-100 dark:hover:border-[#111111] dark:hover:bg-[#111111]"
                             aria-label={isBg ? "Смени тема" : "Toggle theme"}
                         >
                             <img

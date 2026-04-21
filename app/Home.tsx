@@ -6,6 +6,14 @@ export default function Home() {
     const { i18n } = useTranslation()
     const lang = i18n.language
 
+    const scrollToId = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault()
+        const section = document.getElementById(id)
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+    }
+
     const pageWrap =
         "mx-auto w-full max-w-[1600px] px-2 py-2 sm:px-3 sm:py-3 md:px-4 lg:px-5 xl:px-6 2xl:px-8"
 
@@ -37,7 +45,7 @@ export default function Home() {
         "mt-4 grid gap-3 sm:grid-cols-2"
 
     const quickItemClass =
-        "group overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900"
+        "group block overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900"
 
     const quickItemImageWrapClass =
         "flex h-[120px] items-center justify-center overflow-hidden rounded-xl bg-transparent dark:bg-transparent sm:h-[128px]"
@@ -127,16 +135,16 @@ export default function Home() {
                         <div className="flex h-full flex-col">
                             <div>
                                 <div className={heroButtonsClass}>
-                                    <a href="#services" className={primaryButtonClass}>
+                                    <a href="#services" onClick={scrollToId("services")} className={primaryButtonClass}>
                                         Виж услуги
                                     </a>
-                                    <a href="#foreign-clients" className={secondaryButtonClass}>
+                                    <a href="#foreign-clients" onClick={scrollToId("foreign-clients")} className={secondaryButtonClass}>
                                         За чуждестранни клиенти
                                     </a>
                                 </div>
 
                                 <div className={quickStripClass}>
-                                    <div className={quickItemClass}>
+                                    <a href="#accounting" onClick={scrollToId("accounting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_left_centered.png"
@@ -147,9 +155,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Текущо счетоводно обслужване
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#payroll" onClick={scrollToId("payroll")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_right_centered.png"
@@ -160,9 +168,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             ТРЗ и администриране на персонал
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#consulting" onClick={scrollToId("consulting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_left_centered.png"
@@ -173,9 +181,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Данъчни и правни консултации
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#partners" onClick={scrollToId("partners")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_right_centered.png"
@@ -186,7 +194,7 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Съдействие за нови фирми
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
 
@@ -458,16 +466,16 @@ export default function Home() {
                         <div className="flex h-full flex-col">
                             <div>
                                 <div className={heroButtonsClass}>
-                                    <a href="#services" className={primaryButtonClass}>
+                                    <a href="#services" onClick={scrollToId("services")} className={primaryButtonClass}>
                                         View services
                                     </a>
-                                    <a href="#foreign-clients" className={secondaryButtonClass}>
+                                    <a href="#foreign-clients" onClick={scrollToId("foreign-clients")} className={secondaryButtonClass}>
                                         For foreign clients
                                     </a>
                                 </div>
 
                                 <div className={quickStripClass}>
-                                    <div className={quickItemClass}>
+                                    <a href="#accounting" onClick={scrollToId("accounting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_left_centered.png"
@@ -478,9 +486,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Ongoing accounting support
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#payroll" onClick={scrollToId("payroll")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/top_right_centered.png"
@@ -491,9 +499,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Payroll and staff administration
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#consulting" onClick={scrollToId("consulting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_left_centered.png"
@@ -504,9 +512,9 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Tax and legal consultations
                                         </div>
-                                    </div>
+                                    </a>
 
-                                    <div className={quickItemClass}>
+                                    <a href="#partners" onClick={scrollToId("partners")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
                                             <img
                                                 src="/images/bottom_right_centered.png"
@@ -517,7 +525,7 @@ export default function Home() {
                                         <div className={quickItemTextClass}>
                                             Support for new companies
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
 
