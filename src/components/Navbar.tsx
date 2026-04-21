@@ -121,14 +121,14 @@ export default function Navbar() {
           ]
 
     const linkClass = (active: boolean) =>
-        `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-sm font-semibold tracking-[0.01em] transition ${
+        `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-[13px] font-semibold tracking-[0.01em] transition sm:text-sm ${
             active
                 ? "text-slate-950 dark:text-white lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950 dark:lg:after:bg-white"
                 : "text-slate-600 hover:text-slate-950 dark:text-zinc-300 dark:hover:text-white"
         }`
 
     const navButtonClass = (active: boolean) =>
-        `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-sm font-semibold tracking-[0.01em] transition ${
+        `relative inline-flex items-center justify-center whitespace-nowrap bg-transparent text-[13px] font-semibold tracking-[0.01em] transition sm:text-sm ${
             active
                 ? "text-slate-950 dark:text-white lg:after:absolute lg:after:-bottom-[14px] lg:after:left-0 lg:after:h-[2px] lg:after:w-full lg:after:bg-slate-950 dark:lg:after:bg-white"
                 : "text-slate-600 hover:text-slate-950 dark:text-zinc-300 dark:hover:text-white"
@@ -146,30 +146,42 @@ export default function Navbar() {
     return (
         <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">
             <div className="mx-auto max-w-[1600px] px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
-                <div className="grid min-h-[72px] grid-cols-1 items-center gap-y-3 py-3 sm:min-h-[80px] sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
-                    <div className="order-2 flex items-center justify-center gap-5 sm:gap-6 lg:order-1 lg:justify-end lg:gap-8">
-                        {leftItems.map((item) => {
-                            const active =
-                                item.key === "home"
-                                    ? homeActive
-                                    : item.key === "services"
-                                    ? servicesActive
-                                    : false
+                <div className="grid min-h-[72px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-3 py-3 sm:min-h-[80px] sm:grid-cols-[1fr_auto_1fr] sm:gap-x-4 sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
+                    <div className="order-2 col-span-2 sm:order-3 sm:col-span-3 lg:order-1 lg:col-span-1">
+                        <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-end lg:gap-8">
+                            {leftItems.map((item) => {
+                                const active =
+                                    item.key === "home"
+                                        ? homeActive
+                                        : item.key === "services"
+                                          ? servicesActive
+                                          : false
 
-                            return (
-                                <button
-                                    key={item.key}
-                                    type="button"
-                                    onClick={item.action}
-                                    className={navButtonClass(active)}
+                                return (
+                                    <button
+                                        key={item.key}
+                                        type="button"
+                                        onClick={item.action}
+                                        className={navButtonClass(active)}
+                                    >
+                                        {item.label}
+                                    </button>
+                                )
+                            })}
+
+                            {rightItems.map((item) => (
+                                <Link
+                                    key={item.to}
+                                    href={item.to}
+                                    className={linkClass(pathname === item.to)}
                                 >
                                     {item.label}
-                                </button>
-                            )
-                        })}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="order-1 flex justify-center lg:order-2">
+                    <div className="order-1 col-start-1 row-start-1 justify-self-start sm:col-start-2 sm:justify-self-center lg:order-2 lg:col-start-auto lg:row-start-auto">
                         <button
                             type="button"
                             onClick={goToHome}
@@ -185,19 +197,7 @@ export default function Navbar() {
                         </button>
                     </div>
 
-                    <div className="order-3 flex items-center justify-center gap-5 sm:gap-6 lg:order-3 lg:justify-start lg:gap-8">
-                        {rightItems.map((item) => (
-                            <Link
-                                key={item.to}
-                                href={item.to}
-                                className={linkClass(pathname === item.to)}
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
-                    </div>
-
-                    <div className="order-4 flex flex-wrap items-center justify-center gap-3 border-t border-slate-200 pt-3 sm:gap-4 lg:order-4 lg:justify-end lg:border-t-0 lg:pt-0 dark:border-[#111111]">
+                    <div className="order-1 col-start-2 row-start-1 flex items-center justify-end gap-3 sm:col-start-3 sm:justify-self-end lg:order-4 lg:col-start-auto lg:row-start-auto lg:gap-4">
                         <button
                             type="button"
                             onClick={toggleTheme}
@@ -213,7 +213,7 @@ export default function Navbar() {
                             />
                         </button>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 whitespace-nowrap">
                             <button
                                 type="button"
                                 onClick={() => void setLanguage("bg")}
@@ -233,6 +233,8 @@ export default function Navbar() {
                             </button>
                         </div>
                     </div>
+
+                    <div className="hidden lg:order-3 lg:flex" />
                 </div>
             </div>
         </header>
