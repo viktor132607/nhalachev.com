@@ -5,6 +5,7 @@ import ClientProviders from "../src/components/ClientProviders"
 import Navbar from "../src/components/Navbar"
 import Footer from "../src/components/Footer"
 import CookieBanner from "../src/components/CookieBanner"
+import ContactBubble from "../src/components/ContactBubble"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
                 <ClientProviders>
                     <Navbar />
                     <main>{children}</main>
+                    <ContactBubble />
                     <Footer />
                     <CookieBanner />
                 </ClientProviders>
