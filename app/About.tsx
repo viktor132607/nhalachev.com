@@ -16,9 +16,9 @@ export default function About() {
         "grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start xl:grid-cols-[400px_minmax(0,1fr)] xl:gap-10"
 
     const imageWrapClass =
-        "mx-auto w-full max-w-[400px] overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50 shadow-sm dark:border-[#111111] dark:bg-[#1c1c1f] lg:h-[500px]"
+        "mx-auto w-full max-w-[400px] overflow-hidden rounded-[24px] border border-slate-200 bg-slate-50 shadow-sm dark:border-[#111111] dark:bg-[#1c1c1f] lg:h-[480px]"
 
-    const imageClass = "h-full w-full object-cover object-center"
+    const imageClass = "h-full w-full object-cover object-center lg:h-[500px]"
 
     const titleClass =
         "mb-6 text-[30px] font-bold tracking-tight text-[#1f2937] dark:text-[#ffffff] sm:text-[36px] lg:text-[42px]"
