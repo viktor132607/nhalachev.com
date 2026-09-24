@@ -50,6 +50,25 @@ describe("SEO helpers", () => {
         expect(metadata.robots).toEqual({ index: false, follow: true })
     })
 
+    it("creates localized home metadata", () => {
+        const metadata = createLocalizedPageMetadata({
+            locale: "en",
+            title: "Accounting services",
+            description: "Description",
+            path: "/",
+        })
+
+        expect(metadata.alternates).toEqual({
+            canonical: "/en",
+            languages: {
+                bg: "/bg",
+                en: "/en",
+                "x-default": "/bg",
+            },
+        })
+        expect(metadata.robots).toEqual({ index: true, follow: true })
+    })
+
     it("creates localized canonical and hreflang metadata", () => {
         const bg = createLocalizedPageMetadata({
             locale: "bg",
