@@ -118,6 +118,29 @@ describe("Contact", () => {
         expect(screen.getByRole("button", { name: "Send" })).not.toBeDisabled()
     })
 
+    it("shows English success and the map when optional cookies are accepted", async () => {
+        contactState.language = "en"
+        contactState.consent = true
+        vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+            ok: true,
+            json: vi.fn().mockResolvedValue({ code: "success" }),
+        }))
+
+        const { container } = render(<Contact />)
+        fillForm(container, {
+            website: "",
+            name: " Jane ",
+            email: " jane@example.com ",
+            phone: " 456 ",
+            subject: " Accounting ",
+            message: " I need ongoing accounting assistance. ",
+        })
+        fireEvent.submit(container.querySelector("form")!)
+
+        expect(await screen.findByText("Your message was sent successfully.")).toBeInTheDocument()
+        expect(container.querySelector("iframe")).toBeInTheDocument()
+    })
+
     it("handles an application-level error response", async () => {
         vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
             ok: true,
