@@ -1,11 +1,11 @@
 "use client"
 
-import { useTranslation } from "react-i18next"
+import { useSitePreferences } from "../src/context/SitePreferencesContext"
 import type { Locale } from "../src/lib/locale"
 
 export default function Cookies({ locale }: { locale?: Locale } = {}) {
-    const { i18n } = useTranslation()
-    const isBg = locale ? locale === "bg" : i18n.language?.toLowerCase().startsWith("bg")
+    const { locale: contextLocale } = useSitePreferences()
+    const isBg = (locale ?? contextLocale) === "bg"
 
     const pageWrap =
         "mx-auto w-full max-w-[1280px] px-4 pb-0 pt-0 sm:px-5 md:px-6 lg:px-8 xl:px-10"
