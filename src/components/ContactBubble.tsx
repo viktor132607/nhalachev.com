@@ -2,15 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useTranslation } from "react-i18next"
-import { getLocaleFromPathname, localizePath } from "../lib/locale"
+import { useSitePreferences } from "../context/SitePreferencesContext"
+import { localizePath } from "../lib/locale"
 
 export default function ContactBubble() {
-    const { i18n } = useTranslation()
     const pathname = usePathname()
-    const routeLocale = getLocaleFromPathname(pathname)
-    const fallbackLocale = i18n.language?.toLowerCase().startsWith("bg") ? "bg" : "en"
-    const locale = routeLocale ?? fallbackLocale
+    const { locale } = useSitePreferences()
     const isBg = locale === "bg"
     const contactPath = localizePath(locale, "/contact")
     const contactBubbleLabel = isBg ? "Свържете се" : "Contact us"
