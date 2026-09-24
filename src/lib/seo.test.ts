@@ -4,6 +4,7 @@ import {
     SITE_NAME,
     SOCIAL_IMAGE,
     accountingServiceStructuredData,
+    createLocalizedPageMetadata,
     createPageMetadata,
     serializeStructuredData,
 } from "./seo"
@@ -47,6 +48,51 @@ describe("SEO helpers", () => {
 
         expect(metadata.alternates).toEqual({ canonical: "/privacy" })
         expect(metadata.robots).toEqual({ index: false, follow: true })
+    })
+
+    it("creates localized canonical and hreflang metadata", () => {
+        const bg = createLocalizedPageMetadata({
+            locale: "bg",
+            title: "За мен",
+            description: "Описание",
+            path: "/about/",
+        })
+        const en = createLocalizedPageMetadata({
+            locale: "en",
+            title: "Privacy",
+            description: "Description",
+            path: "/privacy",
+            index: false,
+        })
+
+        expect(bg.alternates).toEqual({
+            canonical: "/bg/about",
+            languages: {
+                bg: "/bg/about",
+                en: "/en/about",
+                "x-default": "/bg/about",
+            },
+        })
+        expect(bg.openGraph).toMatchObject({
+            locale: "bg_BG",
+            alternateLocale: ["en_US"],
+            url: "/bg/about",
+        })
+
+        expect(en.alternates).toEqual({
+            canonical: "/en/privacy",
+            languages: {
+                bg: "/bg/privacy",
+                en: "/en/privacy",
+                "x-default": "/bg/privacy",
+            },
+        })
+        expect(en.openGraph).toMatchObject({
+            locale: "en_US",
+            alternateLocale: ["bg_BG"],
+            url: "/en/privacy",
+        })
+        expect(en.robots).toEqual({ index: false, follow: true })
     })
 
     it("contains AccountingService structured data", () => {

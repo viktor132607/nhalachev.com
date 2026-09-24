@@ -19,6 +19,7 @@ export default defineConfig({
                 "src/components/ContactBubble.tsx",
                 "src/components/Footer.tsx",
                 "src/components/LanguageHtmlSync.tsx",
+                "src/lib/locale.ts",
                 "src/lib/seo.ts",
                 "src/components/StructuredData.tsx",
                 "app/robots.ts",
