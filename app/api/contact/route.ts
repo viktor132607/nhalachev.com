@@ -2,6 +2,63 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import { z } from "zod"
 
+export const CONTACT_RATE_LIMIT_MAX = 5
+export const CONTACT_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+
+type RateLimitEntry = {
+    count: number
+    resetAt: number
+}
+
+const contactRateLimit = new Map<string, RateLimitEntry>()
+
+export function resetContactRateLimit() {
+    contactRateLimit.clear()
+}
+
+function getClientIp(request: Request) {
+    const forwardedFor = request.headers.get("x-forwarded-for")
+
+    if (forwardedFor) {
+        return forwardedFor.split(",")[0].trim()
+    }
+
+    return request.headers.get("x-real-ip")?.trim() || "unknown"
+}
+
+function consumeContactRateLimit(ip: string, now = Date.now()) {
+    const existing = contactRateLimit.get(ip)
+
+    if (!existing || now >= existing.resetAt) {
+        contactRateLimit.set(ip, {
+            count: 1,
+            resetAt: now + CONTACT_RATE_LIMIT_WINDOW_MS,
+        })
+
+        return {
+            allowed: true,
+            remaining: CONTACT_RATE_LIMIT_MAX - 1,
+            retryAfterSeconds: 0,
+        }
+    }
+
+    if (existing.count >= CONTACT_RATE_LIMIT_MAX) {
+        return {
+            allowed: false,
+            remaining: 0,
+            retryAfterSeconds: Math.max(1, Math.ceil((existing.resetAt - now) / 1000)),
+        }
+    }
+
+    existing.count += 1
+
+    return {
+        allowed: true,
+        remaining: CONTACT_RATE_LIMIT_MAX - existing.count,
+        retryAfterSeconds: 0,
+    }
+}
+
 const contactSchema = z.object({
     name: z.string().trim().min(2).max(80),
     email: z.string().trim().email().max(120),
@@ -33,6 +90,22 @@ export async function POST(request: Request) {
 
         if (result.data.website) {
             return NextResponse.json({ code: "success" }, { status: 200 })
+        }
+
+        const rateLimit = consumeContactRateLimit(getClientIp(request))
+
+        if (!rateLimit.allowed) {
+            return NextResponse.json(
+                { code: "rate_limited" },
+                {
+                    status: 429,
+                    headers: {
+                        "Retry-After": String(rateLimit.retryAfterSeconds),
+                        "X-RateLimit-Limit": String(CONTACT_RATE_LIMIT_MAX),
+                        "X-RateLimit-Remaining": "0",
+                    },
+                }
+            )
         }
 
         const resendApiKey = process.env.RESEND_API_KEY
