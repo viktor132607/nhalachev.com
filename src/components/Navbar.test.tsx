@@ -1,15 +1,17 @@
 import React from "react"
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const navState = vi.hoisted(() => ({
     pathname: "/bg",
-    language: "bg" as string | undefined,
+    locale: "bg" as "bg" | "en",
+    isDark: false,
 }))
 
 const navMocks = vi.hoisted(() => ({
     push: vi.fn(),
-    changeLanguage: vi.fn(),
+    toggleTheme: vi.fn(),
+    setLocale: vi.fn(),
 }))
 
 vi.mock("next/navigation", () => ({
@@ -19,12 +21,13 @@ vi.mock("next/navigation", () => ({
     }),
 }))
 
-vi.mock("react-i18next", () => ({
-    useTranslation: () => ({
-        i18n: {
-            language: navState.language,
-            changeLanguage: navMocks.changeLanguage,
-        },
+vi.mock("../context/SitePreferencesContext", () => ({
+    useSitePreferences: () => ({
+        locale: navState.locale,
+        isDark: navState.isDark,
+        themeReady: true,
+        toggleTheme: navMocks.toggleTheme,
+        setLocale: navMocks.setLocale,
     }),
 }))
 
@@ -65,12 +68,12 @@ function addServicesSection(rect = { top: 100, bottom: 500 }) {
 describe("Navbar", () => {
     beforeEach(() => {
         navState.pathname = "/bg"
-        navState.language = "bg"
+        navState.locale = "bg"
+        navState.isDark = false
         navMocks.push.mockReset()
-        navMocks.changeLanguage.mockReset()
-        navMocks.changeLanguage.mockResolvedValue(undefined)
-        localStorage.clear()
-        document.documentElement.classList.remove("dark")
+        navMocks.toggleTheme.mockReset()
+        navMocks.setLocale.mockReset()
+        navMocks.setLocale.mockResolvedValue(undefined)
         document.getElementById("services")?.remove()
         Object.defineProperty(window, "scrollTo", {
             configurable: true,
@@ -78,32 +81,21 @@ describe("Navbar", () => {
         })
     })
 
-    it("restores theme, toggles it and switches locale while preserving the route", async () => {
+    it("delegates theme and language changes to the preferences provider", () => {
         navState.pathname = "/bg/about"
-        localStorage.setItem("theme", "dark")
-
+        navState.isDark = true
         render(<Navbar />)
 
-        await waitFor(() => expect(document.documentElement).toHaveClass("dark"))
+        expect(screen.getByAltText("Halachev Accounting").className).toContain("invert")
 
-        const themeButton = screen.getByRole("button", { name: "Смени тема" })
-        fireEvent.click(themeButton)
-        expect(localStorage.getItem("theme")).toBe("light")
-        expect(document.documentElement).not.toHaveClass("dark")
-
-        fireEvent.click(themeButton)
-        expect(localStorage.getItem("theme")).toBe("dark")
-        expect(document.documentElement).toHaveClass("dark")
+        fireEvent.click(screen.getByRole("button", { name: "Смени тема" }))
+        expect(navMocks.toggleTheme).toHaveBeenCalledTimes(1)
 
         fireEvent.click(screen.getByRole("button", { name: "EN" }))
-
-        expect(navMocks.changeLanguage).toHaveBeenCalledWith("en")
-        expect(localStorage.getItem("lang")).toBe("en")
-        await waitFor(() => expect(navMocks.push).toHaveBeenCalledWith("/en/about"))
-
         fireEvent.click(screen.getByRole("button", { name: "BG" }))
-        expect(navMocks.changeLanguage).toHaveBeenCalledWith("bg")
-        await waitFor(() => expect(navMocks.push).toHaveBeenCalledWith("/bg/about"))
+
+        expect(navMocks.setLocale).toHaveBeenCalledWith("en")
+        expect(navMocks.setLocale).toHaveBeenCalledWith("bg")
     })
 
     it("scrolls to services, tracks its active state, handles resize and scrolls home", () => {
@@ -149,7 +141,7 @@ describe("Navbar", () => {
         }).not.toThrow()
     })
 
-    it("navigates to the localized home before scrolling to services", () => {
+    it("navigates to localized home before scrolling to services", () => {
         vi.useFakeTimers()
         navState.pathname = "/bg/about"
         const { section } = addServicesSection()
@@ -173,12 +165,13 @@ describe("Navbar", () => {
     it("keeps English navigation inside the English locale", () => {
         vi.useFakeTimers()
         navState.pathname = "/en/contact"
-        navState.language = "bg"
+        navState.locale = "en"
         render(<Navbar />)
 
         expect(screen.getByRole("button", { name: "Home" })).toBeInTheDocument()
         expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/en/about")
         expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/en/contact")
+        expect(screen.getByRole("button", { name: "Toggle theme" })).toBeInTheDocument()
 
         fireEvent.click(screen.getByRole("button", { name: "Services" }))
         act(() => {
@@ -187,22 +180,8 @@ describe("Navbar", () => {
         expect(navMocks.push).toHaveBeenCalledWith("/en")
     })
 
-    it("uses the i18n fallback on legacy unprefixed paths", () => {
-        navState.pathname = "/about"
-        navState.language = undefined
-
-        render(<Navbar />)
-
-        expect(screen.getByRole("button", { name: "Home" })).toBeInTheDocument()
-        expect(screen.getByRole("button", { name: "Services" })).toBeInTheDocument()
-        expect(screen.getByRole("button", { name: "Toggle theme" })).toBeInTheDocument()
-        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/en/about")
-        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/en/contact")
-    })
-
     it("supports the legacy root while redirects are being applied", () => {
         navState.pathname = "/"
-        navState.language = "bg"
         render(<Navbar />)
 
         fireEvent.click(screen.getByAltText("Halachev Accounting").closest("button")!)
