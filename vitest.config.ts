@@ -18,6 +18,7 @@ export default defineConfig({
                 "src/i18n/i18n.ts",
                 "src/components/ContactBubble.tsx",
                 "src/components/Footer.tsx",
+                "src/components/LanguageHtmlSync.tsx",
             ],
             thresholds: {
                 lines: 100,
