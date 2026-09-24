@@ -4,35 +4,17 @@ import Image from "next/image"
 import Link from "next/link"
 import mainLogo from "../../public/images/mainlogo.png"
 import { usePathname, useRouter } from "next/navigation"
-import { useTranslation } from "react-i18next"
 import { useEffect, useState } from "react"
-import { getLocaleFromPathname, localizePath, switchLocaleInPath } from "../lib/locale"
-
-const THEME_KEY = "theme"
+import { useSitePreferences } from "../context/SitePreferencesContext"
+import { localizePath } from "../lib/locale"
 
 export default function Navbar() {
-    const { i18n } = useTranslation()
     const pathname = usePathname()
     const router = useRouter()
-    const [isDark, setIsDark] = useState(false)
+    const { locale, isDark, toggleTheme, setLocale } = useSitePreferences()
     const [servicesActive, setServicesActive] = useState(false)
-    const routeLocale = getLocaleFromPathname(pathname)
-    const fallbackLocale = i18n.language?.toLowerCase().startsWith("bg") ? "bg" : "en"
-    const locale = routeLocale ?? fallbackLocale
     const homePath = localizePath(locale)
     const isHome = pathname === homePath || pathname === "/"
-
-    useEffect(() => {
-        const timeoutId = window.setTimeout(() => {
-            const savedTheme = localStorage.getItem(THEME_KEY)
-            const dark = savedTheme === "dark"
-
-            document.documentElement.classList.toggle("dark", dark)
-            setIsDark(dark)
-        }, 0)
-
-        return () => window.clearTimeout(timeoutId)
-    }, [])
 
     useEffect(() => {
         if (!isHome) {
@@ -63,20 +45,6 @@ export default function Navbar() {
     }, [isHome])
 
     const isBg = locale === "bg"
-
-    const setLanguage = async (lng: "bg" | "en") => {
-        localStorage.setItem("lang", lng)
-        await i18n.changeLanguage(lng)
-        router.push(switchLocaleInPath(pathname, lng))
-    }
-
-    const toggleTheme = () => {
-        const next = !isDark
-        setIsDark(next)
-        document.documentElement.classList.toggle("dark", next)
-        localStorage.setItem(THEME_KEY, next ? "dark" : "light")
-        window.dispatchEvent(new Event("themechange"))
-    }
 
     const goToServices = () => {
         if (isHome) {
@@ -221,7 +189,7 @@ export default function Navbar() {
                         <div className="flex items-center gap-2 whitespace-nowrap">
                             <button
                                 type="button"
-                                onClick={() => void setLanguage("bg")}
+                                onClick={() => void setLocale("bg")}
                                 className={langButtonClass(isBg)}
                             >
                                 BG
@@ -231,7 +199,7 @@ export default function Navbar() {
 
                             <button
                                 type="button"
-                                onClick={() => void setLanguage("en")}
+                                onClick={() => void setLocale("en")}
                                 className={langButtonClass(!isBg)}
                             >
                                 EN
