@@ -7,18 +7,24 @@ import {
 } from "../lib/cookies"
 
 const bannerState = vi.hoisted(() => ({
-    pathname: "/bg",
+    locale: "bg" as "bg" | "en",
 }))
 
-vi.mock("next/navigation", () => ({
-    usePathname: () => bannerState.pathname,
+vi.mock("../context/SitePreferencesContext", () => ({
+    useSitePreferences: () => ({
+        locale: bannerState.locale,
+        isDark: false,
+        themeReady: true,
+        toggleTheme: vi.fn(),
+        setLocale: vi.fn(),
+    }),
 }))
 
 import CookieBanner from "./CookieBanner"
 
 describe("CookieBanner", () => {
     beforeEach(() => {
-        bannerState.pathname = "/bg"
+        bannerState.locale = "bg"
         localStorage.clear()
     })
 
@@ -42,8 +48,8 @@ describe("CookieBanner", () => {
         expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe("rejected")
     })
 
-    it("renders English controls on English URLs", async () => {
-        bannerState.pathname = "/en/contact"
+    it("renders English controls from centralized locale", async () => {
+        bannerState.locale = "en"
         render(<CookieBanner />)
 
         expect(await screen.findByText("Cookies")).toBeInTheDocument()
