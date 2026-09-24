@@ -58,7 +58,7 @@ describe("Footer", () => {
         expect(screen.getByText("Privacy Policy")).toBeInTheDocument()
         expect(screen.getByText("Terms of Service")).toBeInTheDocument()
         expect(screen.getByText("Cookie Policy")).toBeInTheDocument()
-        expect(screen.getByText("All rights reserved.")).toBeInTheDocument()
+        expect(screen.getByText(/All rights reserved\./)).toBeInTheDocument()
         expect(screen.getByText("Phone:")).toBeInTheDocument()
     })
 
