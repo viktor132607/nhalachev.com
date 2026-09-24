@@ -44,6 +44,19 @@ describe("i18n browser initialization", () => {
         expect(localStorage.getItem("lang")).toBe("bg")
     })
 
+    it("skips browser persistence when window is unavailable", async () => {
+        const browserWindow = window
+        vi.stubGlobal("window", undefined)
+        vi.resetModules()
+
+        await import("./i18n")
+
+        expect(i18nMock.changeLanguage).not.toHaveBeenCalled()
+        expect(i18nMock.on).not.toHaveBeenCalled()
+
+        vi.stubGlobal("window", browserWindow)
+    })
+
     it("does not change language when nothing is saved", async () => {
         await import("./i18n")
 
