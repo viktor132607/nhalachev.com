@@ -16,9 +16,9 @@ describe("i18n SSR initialization", () => {
         i18nMock.use.mockReturnValue(i18nMock)
         i18nMock.init.mockReturnValue(i18nMock)
 
-        const module = await import("./i18n")
+        const i18nModule = await import("./i18n")
 
-        expect(module.default).toBe(i18nMock)
+        expect(i18nModule.default).toBe(i18nMock)
         expect(i18nMock.changeLanguage).not.toHaveBeenCalled()
         expect(i18nMock.on).not.toHaveBeenCalled()
     })

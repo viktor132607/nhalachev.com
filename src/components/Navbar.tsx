@@ -21,16 +21,19 @@ export default function Navbar() {
     const isHome = pathname === homePath || pathname === "/"
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem(THEME_KEY)
-        const dark = savedTheme === "dark"
+        const timeoutId = window.setTimeout(() => {
+            const savedTheme = localStorage.getItem(THEME_KEY)
+            const dark = savedTheme === "dark"
 
-        document.documentElement.classList.toggle("dark", dark)
-        setIsDark(dark)
+            document.documentElement.classList.toggle("dark", dark)
+            setIsDark(dark)
+        }, 0)
+
+        return () => window.clearTimeout(timeoutId)
     }, [])
 
     useEffect(() => {
         if (!isHome) {
-            setServicesActive(false)
             return
         }
 
@@ -139,7 +142,8 @@ export default function Navbar() {
                 : "text-slate-400 hover:text-slate-700 dark:text-zinc-500 dark:hover:text-zinc-200"
         }`
 
-    const homeActive = isHome && !servicesActive
+    const effectiveServicesActive = isHome && servicesActive
+    const homeActive = isHome && !effectiveServicesActive
 
     return (
         <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">
@@ -149,7 +153,7 @@ export default function Navbar() {
                         <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-end lg:gap-8">
                             {leftItems.map((item) => {
                                 const active =
-                                    item.key === "home" ? homeActive : servicesActive
+                                    item.key === "home" ? homeActive : effectiveServicesActive
 
                                 return (
                                     <button

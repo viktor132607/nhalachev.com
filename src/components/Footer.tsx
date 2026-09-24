@@ -19,13 +19,14 @@ export default function Footer() {
     const isBg = locale === "bg"
 
     useEffect(() => {
-        setMounted(true)
+        const syncInitialTheme = window.setTimeout(() => {
+            const savedTheme = localStorage.getItem(THEME_KEY)
+            const dark = savedTheme === "dark"
 
-        const savedTheme = localStorage.getItem(THEME_KEY)
-        const dark = savedTheme === "dark"
-
-        document.documentElement.classList.toggle("dark", dark)
-        setIsDark(dark)
+            document.documentElement.classList.toggle("dark", dark)
+            setMounted(true)
+            setIsDark(dark)
+        }, 0)
 
         const handleThemeChange = () => {
             const nextDark = document.documentElement.classList.contains("dark")
@@ -35,6 +36,7 @@ export default function Footer() {
         window.addEventListener("themechange", handleThemeChange)
 
         return () => {
+            window.clearTimeout(syncInitialTheme)
             window.removeEventListener("themechange", handleThemeChange)
         }
     }, [])

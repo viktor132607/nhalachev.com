@@ -15,8 +15,12 @@ export default function CookieBanner() {
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
-        const saved = getCookieConsent()
-        setVisible(!saved)
+        const timeoutId = window.setTimeout(() => {
+            const saved = getCookieConsent()
+            setVisible(!saved)
+        }, 0)
+
+        return () => window.clearTimeout(timeoutId)
     }, [])
 
     const acceptCookies = () => {
