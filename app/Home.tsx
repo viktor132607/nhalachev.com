@@ -317,12 +317,12 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
             <div id="services" className={containerClass}>
                 <div className={titleWrapClass}>
-                    <h1 className={titleClass}>Услуги & Дейности</h1>
+                    <h2 className={titleClass}>Услуги & Дейности</h2>
                 </div>
 
                 <div className={contentClass}>
                     <section className={sectionClass} id="accounting">
-                        <h2 className={headingClass}>Счетоводни услуги</h2>
+                        <h3 className={headingClass}>Счетоводни услуги</h3>
                         <ul className={listClass}>
                             <li>Оперативна счетоводна отчетност на текущите документи, в съответствие с изискванията на българското счетоводно законодателство и Националните или Международните Счетоводни Стандарти</li>
                             <li>Изготвяне на счетоводна политика и индивидуален сметкоплан</li>
@@ -339,7 +339,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="consulting">
-                        <h2 className={headingClass}>Консултации</h2>
+                        <h3 className={headingClass}>Консултации</h3>
                         <p className={textClass}>
 {`Постоянните изменения на съществуващите и приемането на нови нормативни актове винаги води до риска от данъчни грешки, които понякога струват твърде скъпо.`}
                         </p>
@@ -353,7 +353,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="payroll">
-                        <h2 className={headingClass}>ТРЗ</h2>
+                        <h3 className={headingClass}>ТРЗ</h3>
                         <p className={textClass}>
 {`За да спестя Вашите усилия да поддържате специфична компетентност и да гарантирам конфиденциалността на възнагражденията, предлагам възможно най-пълния сервиз по обслужване възнагражденията на Вашия персонал.`}
                         </p>
@@ -371,7 +371,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="legal">
-                        <h2 className={headingClass}>Правни услуги</h2>
+                        <h3 className={headingClass}>Правни услуги</h3>
                         <p className={textClass}>
 {`Предлагам правно обслужване в следните области:`}
                         </p>
@@ -387,7 +387,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="partners">
-                        <h2 className={headingClass}>Партньорски услуги</h2>
+                        <h3 className={headingClass}>Партньорски услуги</h3>
                         <p className={textClass}>
 {`Предлагам достъп и до партньорски услуги в различни области, които могат да бъдат полезни според конкретните нужди на клиента.`}
                         </p>
@@ -400,7 +400,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="foreign-clients">
-                        <h2 className={headingClass}>За чуждестранни клиенти и партньори</h2>
+                        <h3 className={headingClass}>За чуждестранни клиенти и партньори</h3>
                         <p className={textClass}>
 {`Защо България е толкова атрактивна бизнес дестинация
 България отдавна е атрактивна дестинация за създаване на нов бизнес или преместване на компании от чужбина поради редица причини. Страната предлага идеални условия за съчетаване на работа и по-приятен живот от много други държави в Европа.`}
@@ -655,12 +655,12 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
             <div id="services" className={containerClass}>
                 <div className={titleWrapClass}>
-                    <h1 className={titleClass}>Services & Activities</h1>
+                    <h2 className={titleClass}>Services & Activities</h2>
                 </div>
 
                 <div className={contentClass}>
                     <section className={sectionClass} id="accounting">
-                        <h2 className={headingClass}>Accounting Services</h2>
+                        <h3 className={headingClass}>Accounting Services</h3>
                         <ul className={listClass}>
                             <li>Operational accounting of the current documents in accordance with the requirements of the Bulgarian accounting legislation and national or international accounting standards</li>
                             <li>Preparation of accounting policy and individual chart of accounts</li>
@@ -677,7 +677,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="consulting">
-                        <h2 className={headingClass}>Consultations</h2>
+                        <h3 className={headingClass}>Consultations</h3>
                         <p className={textClass}>
 {`The constant changes in the existing and adoption of new regulations always lead to the risk of tax errors, which sometimes cost too expensive.`}
                         </p>
@@ -691,7 +691,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="payroll">
-                        <h2 className={headingClass}>Staff, wages and salaries</h2>
+                        <h3 className={headingClass}>Staff, wages and salaries</h3>
                         <p className={textClass}>
 {`To save you the effort of maintaining specific expertise and to ensure payroll confidentiality, I offer a complete service for managing employee remuneration.`}
                         </p>
@@ -709,7 +709,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="legal">
-                        <h2 className={headingClass}>Law consultations</h2>
+                        <h3 className={headingClass}>Law consultations</h3>
                         <p className={textClass}>
 {`I offer legal support in the following areas:`}
                         </p>
@@ -725,7 +725,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="partners">
-                        <h2 className={headingClass}>Partnership Level Services</h2>
+                        <h3 className={headingClass}>Partnership Level Services</h3>
                         <p className={textClass}>
 {`I also provide access to partner services across different areas that may be useful depending on the client’s specific needs.`}
                         </p>
@@ -738,7 +738,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     </section>
 
                     <section className={sectionClass} id="foreign-clients">
-                        <h2 className={headingClass}>For foreign clients and partners</h2>
+                        <h3 className={headingClass}>For foreign clients and partners</h3>
                         <p className={textClass}>
 {`Why Bulgaria is such an attractive business destination
 Bulgaria has long been an attractive destination for setting up a new business or moving companies from abroad for a number of reasons. The country offers ideal conditions for combining work and a more pleasant life than many other countries in Europe.`}
