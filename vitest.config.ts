@@ -17,6 +17,7 @@ export default defineConfig({
                 "src/components/CookieBanner.tsx",
                 "src/i18n/i18n.ts",
                 "src/components/ContactBubble.tsx",
+                "src/components/Footer.tsx",
             ],
             thresholds: {
                 lines: 100,
