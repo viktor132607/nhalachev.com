@@ -84,7 +84,7 @@ describe("Navbar", () => {
 
         render(<Navbar />)
 
-        expect(document.documentElement).toHaveClass("dark")
+        await waitFor(() => expect(document.documentElement).toHaveClass("dark"))
 
         const themeButton = screen.getByRole("button", { name: "Смени тема" })
         fireEvent.click(themeButton)
