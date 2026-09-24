@@ -11,7 +11,12 @@ vi.mock("resend", () => ({
     Resend: resendMocks.Resend,
 }))
 
-import { POST } from "./route"
+import {
+    CONTACT_RATE_LIMIT_MAX,
+    CONTACT_RATE_LIMIT_WINDOW_MS,
+    POST,
+    resetContactRateLimit,
+} from "./route"
 
 const validPayload = {
     name: "Nikola",
@@ -23,10 +28,16 @@ const validPayload = {
     website: "",
 }
 
-function makeRequest(body: unknown) {
+function makeRequest(
+    body: unknown,
+    headers: Record<string, string> = {}
+) {
     return new Request("http://localhost/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            ...headers,
+        },
         body: JSON.stringify(body),
     })
 }
@@ -38,6 +49,7 @@ async function responseBody(response: Response) {
 describe("POST /api/contact", () => {
     beforeEach(() => {
         vi.clearAllMocks()
+        resetContactRateLimit()
         resendMocks.Resend.mockImplementation((apiKey: string) => {
             resendMocks.constructor(apiKey)
             return { emails: { send: resendMocks.send } }
@@ -140,6 +152,112 @@ describe("POST /api/contact", () => {
         expect(mail.text).toContain("Company / context: Not provided")
         expect(mail.html).toContain("Phone:</strong> Not provided")
         expect(mail.html).toContain("Company / context:</strong> Not provided")
+    })
+
+
+
+    it("rate limits valid submissions per forwarded client IP", async () => {
+        resendMocks.send.mockResolvedValue({ data: { id: "mail-1" }, error: null })
+        const now = 1_800_000_000_000
+        const dateNow = vi.spyOn(Date, "now").mockReturnValue(now)
+
+        for (let attempt = 0; attempt < CONTACT_RATE_LIMIT_MAX; attempt += 1) {
+            const response = await POST(
+                makeRequest(validPayload, {
+                    "x-forwarded-for": "203.0.113.42, 10.0.0.1",
+                })
+            )
+
+            expect(response.status).toBe(200)
+        }
+
+        const limited = await POST(
+            makeRequest(validPayload, {
+                "x-forwarded-for": "203.0.113.42, 10.0.0.1",
+            })
+        )
+
+        expect(limited.status).toBe(429)
+        await expect(responseBody(limited)).resolves.toEqual({ code: "rate_limited" })
+        expect(limited.headers.get("Retry-After")).toBe("600")
+        expect(limited.headers.get("X-RateLimit-Limit")).toBe(
+            String(CONTACT_RATE_LIMIT_MAX)
+        )
+        expect(limited.headers.get("X-RateLimit-Remaining")).toBe("0")
+        expect(resendMocks.send).toHaveBeenCalledTimes(CONTACT_RATE_LIMIT_MAX)
+
+        dateNow.mockRestore()
+    })
+
+    it("keeps rate limits isolated between client IPs and supports x-real-ip", async () => {
+        resendMocks.send.mockResolvedValue({ data: { id: "mail-1" }, error: null })
+
+        for (let attempt = 0; attempt < CONTACT_RATE_LIMIT_MAX; attempt += 1) {
+            await POST(
+                makeRequest(validPayload, {
+                    "x-forwarded-for": "203.0.113.10",
+                })
+            )
+        }
+
+        const otherClient = await POST(
+            makeRequest(validPayload, {
+                "x-real-ip": "198.51.100.7",
+            })
+        )
+
+        expect(otherClient.status).toBe(200)
+        await expect(responseBody(otherClient)).resolves.toEqual({ code: "success" })
+    })
+
+    it("opens a fresh rate-limit window after the previous one expires", async () => {
+        resendMocks.send.mockResolvedValue({ data: { id: "mail-1" }, error: null })
+        const dateNow = vi.spyOn(Date, "now")
+        const start = 1_800_000_000_000
+        dateNow.mockReturnValue(start)
+
+        for (let attempt = 0; attempt < CONTACT_RATE_LIMIT_MAX; attempt += 1) {
+            await POST(
+                makeRequest(validPayload, {
+                    "x-forwarded-for": "192.0.2.8",
+                })
+            )
+        }
+
+        dateNow.mockReturnValue(start + CONTACT_RATE_LIMIT_WINDOW_MS)
+
+        const response = await POST(
+            makeRequest(validPayload, {
+                "x-forwarded-for": "192.0.2.8",
+            })
+        )
+
+        expect(response.status).toBe(200)
+        await expect(responseBody(response)).resolves.toEqual({ code: "success" })
+
+        dateNow.mockRestore()
+    })
+
+    it("does not spend the human rate limit on invalid or honeypot submissions", async () => {
+        resendMocks.send.mockResolvedValue({ data: { id: "mail-1" }, error: null })
+        const headers = { "x-forwarded-for": "203.0.113.77" }
+
+        for (let attempt = 0; attempt < CONTACT_RATE_LIMIT_MAX + 2; attempt += 1) {
+            const invalid = await POST(
+                makeRequest({ ...validPayload, email: "invalid" }, headers)
+            )
+            const honeypot = await POST(
+                makeRequest({ ...validPayload, website: "bot" }, headers)
+            )
+
+            expect(invalid.status).toBe(400)
+            expect(honeypot.status).toBe(200)
+        }
+
+        const human = await POST(makeRequest(validPayload, headers))
+
+        expect(human.status).toBe(200)
+        expect(resendMocks.send).toHaveBeenCalledTimes(1)
     })
 
     it("returns 500 when request parsing throws", async () => {
