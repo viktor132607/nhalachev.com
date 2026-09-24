@@ -32,6 +32,17 @@ describe("cookie consent helpers in the browser", () => {
         expect(getCookieConsent()).toBeNull()
     })
 
+    it("returns safely when window is temporarily unavailable", () => {
+        const browserWindow = window
+        vi.stubGlobal("window", undefined)
+
+        expect(getCookieConsent()).toBeNull()
+        expect(() => setCookieConsent("accepted")).not.toThrow()
+        expect(() => clearCookieConsent()).not.toThrow()
+
+        vi.stubGlobal("window", browserWindow)
+    })
+
     it("stores consent and dispatches the consent event", () => {
         const dispatch = vi.spyOn(window, "dispatchEvent")
 
