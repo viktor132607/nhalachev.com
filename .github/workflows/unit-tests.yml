@@ -27,24 +27,6 @@ jobs:
       - name: Run 100% coverage suite
         run: npm run test:coverage
 
-      - name: Report uncovered functions
-        if: always()
-        run: |
-          node - <<'NODE'
-          const fs = require("fs")
-          const path = "coverage/coverage-final.json"
-          if (!fs.existsSync(path)) process.exit(0)
-          const coverage = JSON.parse(fs.readFileSync(path, "utf8"))
-          for (const [file, data] of Object.entries(coverage)) {
-            for (const [id, count] of Object.entries(data.f)) {
-              if (count === 0) {
-                const meta = data.fnMap[id]
-                console.log("UNCOVERED_FUNCTION", file, meta.name, meta.loc.start.line + ":" + meta.loc.start.column)
-              }
-            }
-          }
-          NODE
-
       - name: Keep package lock in sync
         if: success()
         run: |

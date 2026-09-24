@@ -128,7 +128,7 @@ describe("Contact", () => {
 
         const { container } = render(<Contact />)
         fillForm(container, {
-            website: "",
+            website: " bot-check ",
             name: " Jane ",
             email: " jane@example.com ",
             phone: " 456 ",

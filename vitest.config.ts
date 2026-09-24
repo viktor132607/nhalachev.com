@@ -6,7 +6,7 @@ export default defineConfig({
         setupFiles: ["./vitest.setup.ts"],
         coverage: {
             provider: "v8",
-            reporter: ["text", "json", "json-summary"],
+            reporter: ["text", "json-summary"],
             all: true,
             include: [
                 "app/api/contact/route.ts",
