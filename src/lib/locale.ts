@@ -2,7 +2,7 @@ export const LOCALES = ["bg", "en"] as const
 export type Locale = (typeof LOCALES)[number]
 
 export function isLocale(value: string): value is Locale {
-    return LOCALES.includes(value.toLowerCase() as Locale)
+    return LOCALES.includes(value as Locale)
 }
 
 export function getLocaleFromPathname(pathname: string): Locale | null {
