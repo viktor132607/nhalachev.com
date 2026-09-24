@@ -9,7 +9,7 @@ const contactSchema = z.object({
     subject: z.string().trim().min(2).max(200),
     company: z.string().trim().max(120).optional().or(z.literal("")),
     message: z.string().trim().min(2).max(2400),
-    website: z.string().max(0).optional().or(z.literal("")),
+    website: z.string().trim().max(200).optional().or(z.literal("")),
 })
 
 function escapeHtml(value: string) {
