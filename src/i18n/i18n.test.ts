@@ -17,9 +17,9 @@ describe("i18n initialization", () => {
     })
 
     it("initializes i18n without browser persistence side effects", async () => {
-        const module = await import("./i18n")
+        const i18nModule = await import("./i18n")
 
-        expect(module.default).toBe(i18nMock)
+        expect(i18nModule.default).toBe(i18nMock)
         expect(i18nMock.use).toHaveBeenCalledWith({ type: "3rdParty" })
         expect(i18nMock.init).toHaveBeenCalledWith({
             lng: "bg",
