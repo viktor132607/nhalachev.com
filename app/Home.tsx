@@ -1,10 +1,11 @@
 "use client"
 
 import { useTranslation } from "react-i18next"
+import type { Locale } from "../src/lib/locale"
 
-export default function Home() {
+export default function Home({ locale }: { locale?: Locale } = {}) {
     const { i18n } = useTranslation()
-    const lang = i18n.language
+    const lang = locale ?? i18n.language
 
     const scrollToId = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault()

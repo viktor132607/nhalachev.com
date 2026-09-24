@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import type { Locale } from "../src/lib/locale"
 import {
     COOKIE_CONSENT_EVENT,
     hasAcceptedOptionalCookies,
@@ -9,9 +10,9 @@ import {
 
 const THEME_KEY = "theme"
 
-export default function Contact() {
+export default function Contact({ locale }: { locale?: Locale } = {}) {
     const { i18n } = useTranslation()
-    const lang = i18n.language?.toLowerCase() ?? "bg"
+    const lang = locale ?? i18n.language?.toLowerCase() ?? "bg"
     const isBg = lang.startsWith("bg")
 
     const [isDark, setIsDark] = useState(false)

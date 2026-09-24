@@ -1,10 +1,11 @@
 "use client"
 
 import { useTranslation } from "react-i18next"
+import type { Locale } from "../src/lib/locale"
 
-export default function About() {
+export default function About({ locale }: { locale?: Locale } = {}) {
     const { i18n } = useTranslation()
-    const isBg = i18n.language?.toLowerCase().startsWith("bg")
+    const isBg = locale ? locale === "bg" : i18n.language?.toLowerCase().startsWith("bg")
 
     const pageWrap =
     "mx-auto w-full max-w-[1280px] px-4 pt-0 sm:px-5 md:px-6 lg:px-8 xl:px-10"
