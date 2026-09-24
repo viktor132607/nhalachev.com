@@ -45,6 +45,24 @@ describe("Contact", () => {
         document.documentElement.classList.remove("dark")
     })
 
+    it("matches API constraints for phone and subject in both languages", () => {
+        const bg = render(<Contact />)
+
+        expect(field(bg.container, "phone")).toHaveAttribute("maxlength", "40")
+        expect(field(bg.container, "subject")).toHaveAttribute("minlength", "2")
+        expect(field(bg.container, "subject")).toHaveAttribute("maxlength", "200")
+        expect(field(bg.container, "subject")).toBeRequired()
+        bg.unmount()
+
+        contactState.language = "en"
+        const en = render(<Contact />)
+
+        expect(field(en.container, "phone")).toHaveAttribute("maxlength", "40")
+        expect(field(en.container, "subject")).toHaveAttribute("minlength", "2")
+        expect(field(en.container, "subject")).toHaveAttribute("maxlength", "200")
+        expect(field(en.container, "subject")).toBeRequired()
+    })
+
     it("submits the Bulgarian form, shows loading/success and resets every field", async () => {
         let resolveFetch!: (value: unknown) => void
         const fetchMock = vi.fn(

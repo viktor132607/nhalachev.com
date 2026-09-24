@@ -56,6 +56,19 @@ describe("POST /api/contact", () => {
         expect(resendMocks.send).not.toHaveBeenCalled()
     })
 
+    it.each([
+        ["empty subject", { subject: "" }],
+        ["one-character subject", { subject: "A" }],
+        ["subject over 200 characters", { subject: "A".repeat(201) }],
+        ["phone over 40 characters", { phone: "1".repeat(41) }],
+    ])("returns 400 for %s", async (_case, overrides) => {
+        const response = await POST(makeRequest({ ...validPayload, ...overrides }))
+
+        expect(response.status).toBe(400)
+        await expect(responseBody(response)).resolves.toEqual({ code: "invalid" })
+        expect(resendMocks.send).not.toHaveBeenCalled()
+    })
+
     it("treats a filled honeypot as a successful bot submission without sending email", async () => {
         const response = await POST(makeRequest({ ...validPayload, website: "bot-value" }))
 
