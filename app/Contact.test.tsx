@@ -3,13 +3,18 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const contactState = vi.hoisted(() => ({
-    language: "bg" as string | undefined,
+    locale: "bg" as "bg" | "en",
+    isDark: false,
     consent: false,
 }))
 
-vi.mock("react-i18next", () => ({
-    useTranslation: () => ({
-        i18n: { language: contactState.language },
+vi.mock("../src/context/SitePreferencesContext", () => ({
+    useSitePreferences: () => ({
+        locale: contactState.locale,
+        isDark: contactState.isDark,
+        themeReady: true,
+        toggleTheme: vi.fn(),
+        setLocale: vi.fn(),
     }),
 }))
 
@@ -39,10 +44,9 @@ function fillForm(container: HTMLElement, values = {
 
 describe("Contact", () => {
     beforeEach(() => {
-        contactState.language = "bg"
+        contactState.locale = "bg"
+        contactState.isDark = false
         contactState.consent = false
-        localStorage.clear()
-        document.documentElement.classList.remove("dark")
     })
 
     it("matches API constraints for phone and subject in both languages", () => {
@@ -54,7 +58,7 @@ describe("Contact", () => {
         expect(field(bg.container, "subject")).toBeRequired()
         bg.unmount()
 
-        contactState.language = "en"
+        contactState.locale = "en"
         const en = render(<Contact />)
 
         expect(field(en.container, "phone")).toHaveAttribute("maxlength", "40")
@@ -74,9 +78,7 @@ describe("Contact", () => {
 
         const { container } = render(<Contact />)
         fillForm(container)
-
-        const form = container.querySelector("form")!
-        fireEvent.submit(form)
+        fireEvent.submit(container.querySelector("form")!)
 
         expect(screen.getByRole("button", { name: "Изпращане..." })).toBeDisabled()
 
@@ -113,7 +115,7 @@ describe("Contact", () => {
     })
 
     it("submits every English field and shows the English error on a failed HTTP response", async () => {
-        contactState.language = "en"
+        contactState.locale = "en"
         vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
             ok: false,
             json: vi.fn().mockResolvedValue({ code: "success" }),
@@ -137,7 +139,7 @@ describe("Contact", () => {
     })
 
     it("shows English success and the map when optional cookies are accepted", async () => {
-        contactState.language = "en"
+        contactState.locale = "en"
         contactState.consent = true
         vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
             ok: true,
@@ -194,13 +196,14 @@ describe("Contact", () => {
         expect(await screen.findByText("Възникна грешка при изпращането.")).toBeInTheDocument()
     })
 
-    it("synchronizes theme and optional-cookie state and cleans up listeners", async () => {
-        localStorage.setItem("theme", "dark")
+    it("uses centralized theme and still synchronizes optional-cookie state", async () => {
+        contactState.isDark = true
         const remove = vi.spyOn(window, "removeEventListener")
-        const { container, unmount } = render(<Contact />)
+        const { container, rerender, unmount } = render(<Contact />)
 
-        expect(screen.getByText("За да заредите Google Maps, приемете optional cookies от банера за бисквитки.")).toBeInTheDocument()
         expect(screen.getByAltText("Facebook").className).toContain("invert")
+        expect(screen.getByAltText("TikTok").className).toContain("invert")
+        expect(screen.getByText("За да заредите Google Maps, приемете optional cookies от банера за бисквитки.")).toBeInTheDocument()
 
         contactState.consent = true
         act(() => {
@@ -208,38 +211,24 @@ describe("Contact", () => {
         })
         await waitFor(() => expect(container.querySelector("iframe")).toBeInTheDocument())
 
-        localStorage.setItem("theme", "light")
-        document.documentElement.classList.add("dark")
-        act(() => {
-            window.dispatchEvent(new Event("themechange"))
-        })
-        expect(screen.getByAltText("Facebook").className).toContain("invert")
-
-        document.documentElement.classList.remove("dark")
-        act(() => {
-            window.dispatchEvent(new Event("themechange"))
-        })
+        contactState.isDark = false
+        rerender(<Contact />)
         expect(screen.getByAltText("Facebook").className).not.toContain("invert")
 
         unmount()
-        expect(remove).toHaveBeenCalledWith("themechange", expect.any(Function))
         expect(remove).toHaveBeenCalledWith("cookieconsentchange", expect.any(Function))
     })
 
-    it("uses an explicit route locale over the i18n state", () => {
-        contactState.language = "bg"
-
+    it("uses an explicit route locale over the centralized locale", () => {
+        contactState.locale = "bg"
         render(<Contact locale="en" />)
 
         expect(screen.getByText("Contact form")).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "Send" })).toBeInTheDocument()
     })
 
-    it("falls back to Bulgarian when the language is missing", () => {
-        contactState.language = undefined
-
+    it("uses the centralized Bulgarian locale by default", () => {
         render(<Contact />)
-
         expect(screen.getByText("Никола Халачев")).toBeInTheDocument()
     })
 })
