@@ -1,12 +1,12 @@
 "use client"
 
 import "../i18n/i18n"
-import LanguageHtmlSync from "./LanguageHtmlSync"
+import { SitePreferencesProvider } from "../context/SitePreferencesContext"
 
 export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return <><LanguageHtmlSync />{children}</>
+  return <SitePreferencesProvider>{children}</SitePreferencesProvider>
 }

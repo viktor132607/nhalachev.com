@@ -10,13 +10,4 @@ i18n.use(initReactI18next).init({
   },
 })
 
-if (typeof window !== "undefined") {
-  const saved = localStorage.getItem("lang")
-  if (saved) i18n.changeLanguage(saved)
-
-  i18n.on("languageChanged", (lng) => {
-    localStorage.setItem("lang", lng)
-  })
-}
-
 export default i18n
