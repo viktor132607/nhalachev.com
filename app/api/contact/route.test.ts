@@ -4,13 +4,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 const resendMocks = vi.hoisted(() => ({
     send: vi.fn(),
     constructor: vi.fn(),
+    Resend: vi.fn(),
 }))
 
 vi.mock("resend", () => ({
-    Resend: vi.fn().mockImplementation((apiKey: string) => {
-        resendMocks.constructor(apiKey)
-        return { emails: { send: resendMocks.send } }
-    }),
+    Resend: resendMocks.Resend,
 }))
 
 import { POST } from "./route"
@@ -40,6 +38,10 @@ async function responseBody(response: Response) {
 describe("POST /api/contact", () => {
     beforeEach(() => {
         vi.clearAllMocks()
+        resendMocks.Resend.mockImplementation((apiKey: string) => {
+            resendMocks.constructor(apiKey)
+            return { emails: { send: resendMocks.send } }
+        })
         process.env.RESEND_API_KEY = "test-key"
         process.env.CONTACT_FROM_EMAIL = "from@example.com"
         process.env.CONTACT_EMAIL = "contact@example.com"
