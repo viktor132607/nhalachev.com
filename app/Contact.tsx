@@ -1,47 +1,22 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
 import ContactDetails from "../src/components/contact/ContactDetails"
 import ContactForm from "../src/components/contact/ContactForm"
 import SocialLinks from "../src/components/contact/SocialLinks"
 import { contactContent } from "../src/content/contact"
+import { useSitePreferences } from "../src/context/SitePreferencesContext"
 import {
     COOKIE_CONSENT_EVENT,
     hasAcceptedOptionalCookies,
 } from "../src/lib/cookies"
 import type { Locale } from "../src/lib/locale"
 
-const THEME_KEY = "theme"
-
 export default function Contact({ locale }: { locale?: Locale } = {}) {
-    const { i18n } = useTranslation()
-    const resolvedLocale: Locale =
-        locale ??
-        (i18n.language
-            ? i18n.language.toLowerCase().startsWith("bg")
-                ? "bg"
-                : "en"
-            : "bg")
+    const { locale: contextLocale, isDark } = useSitePreferences()
+    const resolvedLocale: Locale = locale ?? contextLocale
     const content = contactContent[resolvedLocale]
-    const [isDark, setIsDark] = useState(false)
     const [hasOptionalCookies, setHasOptionalCookies] = useState(false)
-
-    useEffect(() => {
-        const syncTheme = () => {
-            const dark =
-                document.documentElement.classList.contains("dark") ||
-                localStorage.getItem(THEME_KEY) === "dark"
-            setIsDark(dark)
-        }
-
-        syncTheme()
-        window.addEventListener("themechange", syncTheme)
-
-        return () => {
-            window.removeEventListener("themechange", syncTheme)
-        }
-    }, [])
 
     useEffect(() => {
         const syncConsent = () => {
