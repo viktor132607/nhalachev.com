@@ -4,13 +4,20 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const state = vi.hoisted(() => ({
     pathname: "/bg",
-    language: "bg" as string | undefined,
 }))
 
-const mocks = vi.hoisted(() => ({
-    push: vi.fn(),
-    changeLanguage: vi.fn(),
-}))
+const mocks = vi.hoisted(() => {
+    const changeLanguage = vi.fn()
+
+    return {
+        push: vi.fn(),
+        changeLanguage,
+        i18n: {
+            language: "bg" as string | undefined,
+            changeLanguage,
+        },
+    }
+})
 
 vi.mock("next/navigation", () => ({
     usePathname: () => state.pathname,
@@ -19,10 +26,7 @@ vi.mock("next/navigation", () => ({
 
 vi.mock("react-i18next", () => ({
     useTranslation: () => ({
-        i18n: {
-            language: state.language,
-            changeLanguage: mocks.changeLanguage,
-        },
+        i18n: mocks.i18n,
     }),
 }))
 
@@ -60,7 +64,7 @@ function renderProvider() {
 describe("SitePreferencesProvider", () => {
     beforeEach(() => {
         state.pathname = "/bg"
-        state.language = "bg"
+        mocks.i18n.language = "bg"
         mocks.push.mockReset()
         mocks.changeLanguage.mockReset()
         mocks.changeLanguage.mockResolvedValue(undefined)
@@ -77,7 +81,7 @@ describe("SitePreferencesProvider", () => {
 
     it("syncs route language and restores a saved dark theme", async () => {
         state.pathname = "/en/about"
-        state.language = "bg"
+        mocks.i18n.language = "bg"
         localStorage.setItem("theme", "dark")
 
         renderProvider()
@@ -140,7 +144,7 @@ describe("SitePreferencesProvider", () => {
 
     it("falls back to i18n language on an unprefixed path", () => {
         state.pathname = "/legacy"
-        state.language = "en-US"
+        mocks.i18n.language = "en-US"
 
         renderProvider()
 
@@ -150,7 +154,7 @@ describe("SitePreferencesProvider", () => {
 
     it("falls back to Bulgarian when i18n language is missing", () => {
         state.pathname = "/legacy"
-        state.language = undefined
+        mocks.i18n.language = undefined
 
         renderProvider()
 
