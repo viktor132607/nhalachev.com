@@ -1,6 +1,14 @@
 "use client"
 
+import Image from "next/image"
 import { useEffect, useState } from "react"
+import facebookIcon from "../public/images/facebook.png"
+import messengerIcon from "../public/images/messenger.png"
+import instagramIcon from "../public/images/black_15047119.png"
+import tiktokIcon from "../public/images/tik-tok_4817846.png"
+import whatsappIcon from "../public/images/1384007.png"
+import viberIcon from "../public/images/viber.png"
+import revolutIcon from "../public/images/revolut.png"
 import { useTranslation } from "react-i18next"
 import type { Locale } from "../src/lib/locale"
 import {
@@ -306,49 +314,49 @@ export default function Contact({ locale }: { locale?: Locale } = {}) {
                             <div className="mt-5 flex flex-wrap gap-3">
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=61565641385893">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/facebook.png" alt="Facebook" className={iconClass} />
+                                        <Image src={facebookIcon} alt="Facebook" className={iconClass} sizes="32px" />
                                     </span>
                                     Facebook
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://m.me/halachev_accounting">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/messenger.png" alt="Messenger" className={iconClass} />
+                                        <Image src={messengerIcon} alt="Messenger" className={iconClass} sizes="32px" />
                                     </span>
                                     Messenger
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/halachev_accounting/">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/black_15047119.png" alt="Instagram" className={iconClass} />
+                                        <Image src={instagramIcon} alt="Instagram" className={iconClass} sizes="32px" />
                                     </span>
                                     Instagram
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@halachev_accounting">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/tik-tok_4817846.png" alt="TikTok" className={tikTokIconClass} />
+                                        <Image src={tiktokIcon} alt="TikTok" className={tikTokIconClass} sizes="32px" />
                                     </span>
                                     TikTok
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://wa.me/359887764200">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/1384007.png" alt="WhatsApp" className={iconClass} />
+                                        <Image src={whatsappIcon} alt="WhatsApp" className={iconClass} sizes="32px" />
                                     </span>
                                     WhatsApp
                                 </a>
 
                                 <a className={socialChipClass} href="viber://chat?number=%2B359887764200">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/viber.png" alt="Viber" className={iconClass} />
+                                        <Image src={viberIcon} alt="Viber" className={iconClass} sizes="32px" />
                                     </span>
                                     Viber
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://revolut.me/halachev">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/revolut.png" alt="Revolut" className={iconClass} />
+                                        <Image src={revolutIcon} alt="Revolut" className={iconClass} sizes="32px" />
                                     </span>
                                     Revolut
                                 </a>
@@ -554,49 +562,49 @@ export default function Contact({ locale }: { locale?: Locale } = {}) {
                             <div className="mt-5 flex flex-wrap gap-3">
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=61565641385893">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/facebook.png" alt="Facebook" className={iconClass} />
+                                        <Image src={facebookIcon} alt="Facebook" className={iconClass} sizes="32px" />
                                     </span>
                                     Facebook
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://m.me/halachev_accounting">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/messenger.png" alt="Messenger" className={iconClass} />
+                                        <Image src={messengerIcon} alt="Messenger" className={iconClass} sizes="32px" />
                                     </span>
                                     Messenger
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/halachev_accounting/">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/black_15047119.png" alt="Instagram" className={iconClass} />
+                                        <Image src={instagramIcon} alt="Instagram" className={iconClass} sizes="32px" />
                                     </span>
                                     Instagram
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@halachev_accounting">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/tik-tok_4817846.png" alt="TikTok" className={tikTokIconClass} />
+                                        <Image src={tiktokIcon} alt="TikTok" className={tikTokIconClass} sizes="32px" />
                                     </span>
                                     TikTok
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://wa.me/359887764200">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/1384007.png" alt="WhatsApp" className={iconClass} />
+                                        <Image src={whatsappIcon} alt="WhatsApp" className={iconClass} sizes="32px" />
                                     </span>
                                     WhatsApp
                                 </a>
 
                                 <a className={socialChipClass} href="viber://chat?number=%2B359887764200">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/viber.png" alt="Viber" className={iconClass} />
+                                        <Image src={viberIcon} alt="Viber" className={iconClass} sizes="32px" />
                                     </span>
                                     Viber
                                 </a>
 
                                 <a className={socialChipClass} target="_blank" rel="noopener noreferrer" href="https://revolut.me/halachev">
                                     <span className={socialIconBoxClass}>
-                                        <img src="/images/revolut.png" alt="Revolut" className={iconClass} />
+                                        <Image src={revolutIcon} alt="Revolut" className={iconClass} sizes="32px" />
                                     </span>
                                     Revolut
                                 </a>

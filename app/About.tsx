@@ -1,6 +1,8 @@
 "use client"
 
+import Image from "next/image"
 import { useTranslation } from "react-i18next"
+import aboutImage from "../public/images/aboutMe.jpeg"
 import type { Locale } from "../src/lib/locale"
 
 export default function About({ locale }: { locale?: Locale } = {}) {
@@ -35,10 +37,11 @@ export default function About({ locale }: { locale?: Locale } = {}) {
                     <div className="mx-auto w-full max-w-[980px]">
                         <div className={introGridClass}>
                             <div className={imageWrapClass}>
-                                <img
-                                    src="/images/aboutMe.jpeg"
+                                <Image
+                                    src={aboutImage}
                                     alt="Никола Халачев"
                                     className={imageClass}
+                                    sizes="(max-width: 1024px) 100vw, 400px"
                                 />
                             </div>
 
@@ -154,10 +157,11 @@ export default function About({ locale }: { locale?: Locale } = {}) {
                     <div className="mx-auto w-full max-w-[980px]">
                         <div className={introGridClass}>
                             <div className={imageWrapClass}>
-                                <img
-                                    src="/images/aboutMe.jpeg"
+                                <Image
+                                    src={aboutImage}
                                     alt="Nikola Halachev"
                                     className={imageClass}
+                                    sizes="(max-width: 1024px) 100vw, 400px"
                                 />
                             </div>
 

@@ -1,6 +1,12 @@
 "use client"
 
+import Image from "next/image"
 import { useTranslation } from "react-i18next"
+import heroImage from "../public/images/fuckinghell.png"
+import accountingImage from "../public/images/top_left_centered.png"
+import payrollImage from "../public/images/top_right_centered.png"
+import consultingImage from "../public/images/bottom_left_centered.png"
+import companySetupImage from "../public/images/bottom_right_centered.png"
 import type { Locale } from "../src/lib/locale"
 
 export default function Home({ locale }: { locale?: Locale } = {}) {
@@ -111,10 +117,12 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     <div className={heroGridClass}>
                         <div>
                             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                                <img
-                                    src="/images/fuckinghell.png"
+                                <Image
+                                    src={heroImage}
                                     alt="Nikola Halachev Accounting"
-                                    className="h-full w-full object-cover"
+                                    className="h-auto w-full object-cover"
+                                    sizes="(max-width: 1024px) 100vw, 60vw"
+                                    priority
                                 />
                             </div>
 
@@ -147,10 +155,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                                 <div className={quickStripClass}>
                                     <a href="#accounting" onClick={scrollToId("accounting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/top_left_centered.png"
+                                            <Image
+                                                src={accountingImage}
                                                 alt="Текущо счетоводно обслужване"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -160,10 +169,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#payroll" onClick={scrollToId("payroll")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/top_right_centered.png"
+                                            <Image
+                                                src={payrollImage}
                                                 alt="ТРЗ и администриране на персонал"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -173,10 +183,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#consulting" onClick={scrollToId("consulting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/bottom_left_centered.png"
+                                            <Image
+                                                src={consultingImage}
                                                 alt="Данъчни и правни консултации"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -186,10 +197,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#partners" onClick={scrollToId("partners")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/bottom_right_centered.png"
+                                            <Image
+                                                src={companySetupImage}
                                                 alt="Съдействие за нови фирми"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -441,10 +453,12 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                     <div className={heroGridClass}>
                         <div>
                             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                                <img
-                                    src="/images/fuckinghell.png"
+                                <Image
+                                    src={heroImage}
                                     alt="Nikola Halachev Accounting"
-                                    className="h-full w-full object-cover"
+                                    className="h-auto w-full object-cover"
+                                    sizes="(max-width: 1024px) 100vw, 60vw"
+                                    priority
                                 />
                             </div>
 
@@ -478,10 +492,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
                                 <div className={quickStripClass}>
                                     <a href="#accounting" onClick={scrollToId("accounting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/top_left_centered.png"
+                                            <Image
+                                                src={accountingImage}
                                                 alt="Ongoing accounting support"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -491,10 +506,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#payroll" onClick={scrollToId("payroll")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/top_right_centered.png"
+                                            <Image
+                                                src={payrollImage}
                                                 alt="Payroll and staff administration"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -504,10 +520,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#consulting" onClick={scrollToId("consulting")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/bottom_left_centered.png"
+                                            <Image
+                                                src={consultingImage}
                                                 alt="Tax and legal consultations"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>
@@ -517,10 +534,11 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
 
                                     <a href="#partners" onClick={scrollToId("partners")} className={quickItemClass}>
                                         <div className={quickItemImageWrapClass}>
-                                            <img
-                                                src="/images/bottom_right_centered.png"
+                                            <Image
+                                                src={companySetupImage}
                                                 alt="Support for new companies"
                                                 className={quickItemImageClass}
+                                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                                             />
                                         </div>
                                         <div className={quickItemTextClass}>

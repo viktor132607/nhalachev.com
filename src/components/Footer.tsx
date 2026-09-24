@@ -1,6 +1,15 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
+import mainLogo from "../../public/images/mainlogo.png"
+import facebookIcon from "../../public/images/facebook.png"
+import instagramIcon from "../../public/images/black_15047119.png"
+import messengerIcon from "../../public/images/messenger.png"
+import tiktokIcon from "../../public/images/tik-tok_4817846.png"
+import whatsappIcon from "../../public/images/1384007.png"
+import viberIcon from "../../public/images/viber.png"
+import revolutIcon from "../../public/images/revolut.png"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -131,11 +140,12 @@ export default function Footer() {
                 <div className={topGridClass}>
                     <div className={brandBlockClass}>
                         <Link href={localizePath(locale)} className="inline-flex items-center">
-                            <img
-                                src="/images/mainlogo.png"
-                                alt="Halachev Accounting"
-                                className={logoClass}
-                            />
+                            <Image
+                                    src={mainLogo}
+                                    alt="Halachev Accounting"
+                                    className={logoClass}
+                                    sizes="(max-width: 640px) 160px, 220px"
+                                />
                         </Link>
 
                         <p className={descriptionClass}>{t.description}</p>
@@ -148,10 +158,11 @@ export default function Footer() {
                                 aria-label="Facebook"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/facebook.png"
+                                <Image
+                                    src={facebookIcon}
                                     alt="Facebook"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -162,10 +173,11 @@ export default function Footer() {
                                 aria-label="Instagram"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/black_15047119.png"
+                                <Image
+                                    src={instagramIcon}
                                     alt="Instagram"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -176,10 +188,11 @@ export default function Footer() {
                                 aria-label="Messenger"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/messenger.png"
+                                <Image
+                                    src={messengerIcon}
                                     alt="Messenger"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -190,10 +203,11 @@ export default function Footer() {
                                 aria-label="TikTok"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/tik-tok_4817846.png"
+                                <Image
+                                    src={tiktokIcon}
                                     alt="TikTok"
                                     className={tikTokIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -204,10 +218,11 @@ export default function Footer() {
                                 aria-label="WhatsApp"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/1384007.png"
+                                <Image
+                                    src={whatsappIcon}
                                     alt="WhatsApp"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -216,10 +231,11 @@ export default function Footer() {
                                 aria-label="Viber"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/viber.png"
+                                <Image
+                                    src={viberIcon}
                                     alt="Viber"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
 
@@ -230,10 +246,11 @@ export default function Footer() {
                                 aria-label="Revolut"
                                 className={socialClass}
                             >
-                                <img
-                                    src="/images/revolut.png"
+                                <Image
+                                    src={revolutIcon}
                                     alt="Revolut"
                                     className={fullIconClass}
+                                    sizes="44px"
                                 />
                             </a>
                         </div>

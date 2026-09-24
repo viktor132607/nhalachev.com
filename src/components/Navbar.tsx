@@ -1,6 +1,8 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
+import mainLogo from "../../public/images/mainlogo.png"
 import { usePathname, useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
 import { useEffect, useState } from "react"
@@ -185,12 +187,14 @@ export default function Navbar() {
                             onClick={goToHome}
                             className="inline-flex items-center justify-center"
                         >
-                            <img
-                                src="/images/mainlogo.png"
+                            <Image
+                                src={mainLogo}
                                 alt="Halachev Accounting"
                                 className={`block h-10 w-auto object-contain transition sm:h-11 md:h-12 lg:h-14 xl:h-16 ${
                                     isDark ? "invert" : ""
                                 }`}
+                                sizes="(max-width: 640px) 160px, (max-width: 1024px) 200px, 240px"
+                                priority
                             />
                         </button>
                     </div>
@@ -202,9 +206,12 @@ export default function Navbar() {
                             className="flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-transparent transition hover:border-neutral-200 hover:bg-neutral-100 dark:hover:border-[#111111] dark:hover:bg-[#111111]"
                             aria-label={isBg ? "Смени тема" : "Toggle theme"}
                         >
-                            <img
+                            <Image
                                 src="/images/light-mode.svg"
                                 alt=""
+                                width={15}
+                                height={15}
+                                unoptimized
                                 className={`h-[15px] w-[15px] object-contain transition duration-200 ${
                                     isDark ? "invert" : ""
                                 }`}
