@@ -3,7 +3,12 @@ import { act, render, screen, waitFor } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const footerState = vi.hoisted(() => ({
+    pathname: "/bg",
     language: "bg" as string | undefined,
+}))
+
+vi.mock("next/navigation", () => ({
+    usePathname: () => footerState.pathname,
 }))
 
 vi.mock("react-i18next", () => ({
@@ -22,21 +27,22 @@ import Footer from "./Footer"
 
 describe("Footer", () => {
     beforeEach(() => {
+        footerState.pathname = "/bg"
         footerState.language = "bg"
         localStorage.clear()
         document.documentElement.classList.remove("dark")
     })
 
-    it("renders Bulgarian copy by default", async () => {
+    it("renders Bulgarian copy and localized links", async () => {
         render(<Footer />)
 
         expect(screen.getByText("Професионално счетоводно обслужване и консултации. Налични 24/7.")).toBeInTheDocument()
-        expect(screen.getByText("Страници")).toBeInTheDocument()
-        expect(screen.getByRole("link", { name: "За мен" })).toHaveAttribute("href", "/about")
-        expect(screen.getByRole("link", { name: "Контакти" })).toHaveAttribute("href", "/contact")
-        expect(screen.getByText("Политика за поверителност")).toBeInTheDocument()
-        expect(screen.getByText("Общи условия")).toBeInTheDocument()
-        expect(screen.getByText("Политика за бисквитките")).toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "Начало" })).toHaveAttribute("href", "/bg")
+        expect(screen.getByRole("link", { name: "За мен" })).toHaveAttribute("href", "/bg/about")
+        expect(screen.getByRole("link", { name: "Контакти" })).toHaveAttribute("href", "/bg/contact")
+        expect(screen.getByRole("link", { name: "Политика за поверителност" })).toHaveAttribute("href", "/bg/privacy")
+        expect(screen.getByRole("link", { name: "Общи условия" })).toHaveAttribute("href", "/bg/terms")
+        expect(screen.getByRole("link", { name: "Политика за бисквитките" })).toHaveAttribute("href", "/bg/cookies")
         expect(screen.getByText("Тел:")).toBeInTheDocument()
 
         await waitFor(() => {
@@ -44,25 +50,35 @@ describe("Footer", () => {
         })
     })
 
-    it("renders all English footer copy and phone label", () => {
-        footerState.language = "en"
+    it("uses the route locale for English copy even when i18n is still Bulgarian", () => {
+        footerState.pathname = "/en/about"
+        footerState.language = "bg"
 
         render(<Footer />)
 
         expect(screen.getByText("Professional accounting & consulting services. Available 24/7.")).toBeInTheDocument()
-        expect(screen.getByText("Pages")).toBeInTheDocument()
-        expect(screen.getByText("Legal")).toBeInTheDocument()
-        expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/")
-        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/about")
-        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/contact")
-        expect(screen.getByText("Privacy Policy")).toBeInTheDocument()
-        expect(screen.getByText("Terms of Service")).toBeInTheDocument()
-        expect(screen.getByText("Cookie Policy")).toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/en")
+        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/en/about")
+        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/en/contact")
+        expect(screen.getByRole("link", { name: "Privacy Policy" })).toHaveAttribute("href", "/en/privacy")
+        expect(screen.getByRole("link", { name: "Terms of Service" })).toHaveAttribute("href", "/en/terms")
+        expect(screen.getByRole("link", { name: "Cookie Policy" })).toHaveAttribute("href", "/en/cookies")
         expect(screen.getByText(/All rights reserved\./)).toBeInTheDocument()
         expect(screen.getByText("Phone:")).toBeInTheDocument()
     })
 
-    it("falls back to Bulgarian if the language is missing", () => {
+    it("uses i18n as fallback for an unprefixed legacy URL", () => {
+        footerState.pathname = "/legacy"
+        footerState.language = "en"
+
+        render(<Footer />)
+
+        expect(screen.getByText("Pages")).toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/en")
+    })
+
+    it("falls back to Bulgarian if both route and language are missing", () => {
+        footerState.pathname = "/legacy"
         footerState.language = undefined
 
         render(<Footer />)

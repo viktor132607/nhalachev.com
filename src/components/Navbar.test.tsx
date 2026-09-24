@@ -1,15 +1,14 @@
 import React from "react"
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const navState = vi.hoisted(() => ({
-    pathname: "/",
+    pathname: "/bg",
     language: "bg" as string | undefined,
 }))
 
 const navMocks = vi.hoisted(() => ({
     push: vi.fn(),
-    refresh: vi.fn(),
     changeLanguage: vi.fn(),
 }))
 
@@ -17,7 +16,6 @@ vi.mock("next/navigation", () => ({
     usePathname: () => navState.pathname,
     useRouter: () => ({
         push: navMocks.push,
-        refresh: navMocks.refresh,
     }),
 }))
 
@@ -66,13 +64,13 @@ function addServicesSection(rect = { top: 100, bottom: 500 }) {
 
 describe("Navbar", () => {
     beforeEach(() => {
-        navState.pathname = "/"
+        navState.pathname = "/bg"
         navState.language = "bg"
         navMocks.push.mockReset()
-        navMocks.refresh.mockReset()
         navMocks.changeLanguage.mockReset()
         navMocks.changeLanguage.mockResolvedValue(undefined)
         localStorage.clear()
+        document.documentElement.classList.remove("dark")
         document.getElementById("services")?.remove()
         Object.defineProperty(window, "scrollTo", {
             configurable: true,
@@ -80,13 +78,12 @@ describe("Navbar", () => {
         })
     })
 
-    it("restores saved language/theme, toggles both themes and changes language", async () => {
-        localStorage.setItem("lang", "bg")
+    it("restores theme, toggles it and switches locale while preserving the route", async () => {
+        navState.pathname = "/bg/about"
         localStorage.setItem("theme", "dark")
 
         render(<Navbar />)
 
-        await waitFor(() => expect(navMocks.changeLanguage).toHaveBeenCalledWith("bg"))
         expect(document.documentElement).toHaveClass("dark")
 
         const themeButton = screen.getByRole("button", { name: "Смени тема" })
@@ -98,18 +95,19 @@ describe("Navbar", () => {
         expect(localStorage.getItem("theme")).toBe("dark")
         expect(document.documentElement).toHaveClass("dark")
 
-        fireEvent.click(screen.getByRole("button", { name: "BG" }))
         fireEvent.click(screen.getByRole("button", { name: "EN" }))
 
-        await waitFor(() => expect(navMocks.refresh).toHaveBeenCalledTimes(2))
-        expect(navMocks.changeLanguage).toHaveBeenCalledWith("bg")
         expect(navMocks.changeLanguage).toHaveBeenCalledWith("en")
         expect(localStorage.getItem("lang")).toBe("en")
+        expect(navMocks.push).toHaveBeenCalledWith("/en/about")
+
+        fireEvent.click(screen.getByRole("button", { name: "BG" }))
+        expect(navMocks.changeLanguage).toHaveBeenCalledWith("bg")
+        expect(navMocks.push).toHaveBeenCalledWith("/bg/about")
     })
 
     it("scrolls to services, tracks its active state, handles resize and scrolls home", () => {
         const { section, rectMock } = addServicesSection()
-        localStorage.setItem("theme", "light")
         const removeListener = vi.spyOn(window, "removeEventListener")
         const { unmount } = render(<Navbar />)
 
@@ -143,7 +141,7 @@ describe("Navbar", () => {
         expect(removeListener).toHaveBeenCalledWith("resize", expect.any(Function))
     })
 
-    it("handles a missing services section on the home page", () => {
+    it("handles a missing services section on localized home", () => {
         render(<Navbar />)
 
         expect(() => {
@@ -151,14 +149,14 @@ describe("Navbar", () => {
         }).not.toThrow()
     })
 
-    it("navigates home first and then scrolls to services from another page", () => {
+    it("navigates to the localized home before scrolling to services", () => {
         vi.useFakeTimers()
-        navState.pathname = "/about"
+        navState.pathname = "/bg/about"
         const { section } = addServicesSection()
         render(<Navbar />)
 
         fireEvent.click(screen.getByRole("button", { name: "Услуги" }))
-        expect(navMocks.push).toHaveBeenCalledWith("/")
+        expect(navMocks.push).toHaveBeenCalledWith("/bg")
 
         act(() => {
             vi.advanceTimersByTime(120)
@@ -169,45 +167,45 @@ describe("Navbar", () => {
         })
 
         fireEvent.click(screen.getByAltText("Halachev Accounting").closest("button")!)
-        expect(navMocks.push).toHaveBeenCalledWith("/")
+        expect(navMocks.push).toHaveBeenCalledWith("/bg")
     })
 
-    it("handles services navigation when the target section is still unavailable", () => {
+    it("keeps English navigation inside the English locale", () => {
         vi.useFakeTimers()
-        navState.pathname = "/contact"
+        navState.pathname = "/en/contact"
+        navState.language = "bg"
         render(<Navbar />)
 
-        fireEvent.click(screen.getByRole("button", { name: "Услуги" }))
+        expect(screen.getByRole("button", { name: "Home" })).toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/en/about")
+        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/en/contact")
+
+        fireEvent.click(screen.getByRole("button", { name: "Services" }))
         act(() => {
             vi.advanceTimersByTime(120)
         })
-
-        expect(navMocks.push).toHaveBeenCalledWith("/")
+        expect(navMocks.push).toHaveBeenCalledWith("/en")
     })
 
-    it("renders English when language is undefined and ignores an invalid saved language", () => {
+    it("uses the i18n fallback on legacy unprefixed paths", () => {
         navState.pathname = "/about"
         navState.language = undefined
-        localStorage.setItem("lang", "fr")
 
         render(<Navbar />)
 
         expect(screen.getByRole("button", { name: "Home" })).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "Services" })).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "Toggle theme" })).toBeInTheDocument()
-        expect(navMocks.changeLanguage).not.toHaveBeenCalledWith("fr")
-        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/about")
-        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/contact")
+        expect(screen.getByRole("link", { name: "About Me" })).toHaveAttribute("href", "/en/about")
+        expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/en/contact")
     })
 
-    it("restores a saved English language", async () => {
-        navState.pathname = "/contact"
-        navState.language = "en"
-        localStorage.setItem("lang", "en")
-
+    it("supports the legacy root while redirects are being applied", () => {
+        navState.pathname = "/"
+        navState.language = "bg"
         render(<Navbar />)
 
-        await waitFor(() => expect(navMocks.changeLanguage).toHaveBeenCalledWith("en"))
-        expect(screen.getByRole("button", { name: "Home" })).toBeInTheDocument()
+        fireEvent.click(screen.getByAltText("Halachev Accounting").closest("button")!)
+        expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" })
     })
 })

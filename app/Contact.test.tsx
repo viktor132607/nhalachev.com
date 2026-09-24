@@ -226,6 +226,15 @@ describe("Contact", () => {
         expect(remove).toHaveBeenCalledWith("cookieconsentchange", expect.any(Function))
     })
 
+    it("uses an explicit route locale over the i18n state", () => {
+        contactState.language = "bg"
+
+        render(<Contact locale="en" />)
+
+        expect(screen.getByText("Contact form")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Send" })).toBeInTheDocument()
+    })
+
     it("falls back to Bulgarian when the language is missing", () => {
         contactState.language = undefined
 

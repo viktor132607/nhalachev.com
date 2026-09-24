@@ -5,10 +5,20 @@ import {
     COOKIE_CONSENT_EVENT,
     COOKIE_CONSENT_KEY,
 } from "../lib/cookies"
+
+const bannerState = vi.hoisted(() => ({
+    pathname: "/bg",
+}))
+
+vi.mock("next/navigation", () => ({
+    usePathname: () => bannerState.pathname,
+}))
+
 import CookieBanner from "./CookieBanner"
 
 describe("CookieBanner", () => {
     beforeEach(() => {
+        bannerState.pathname = "/bg"
         localStorage.clear()
     })
 
@@ -30,6 +40,15 @@ describe("CookieBanner", () => {
 
         await waitFor(() => expect(screen.queryByText("Бисквитки")).not.toBeInTheDocument())
         expect(localStorage.getItem(COOKIE_CONSENT_KEY)).toBe("rejected")
+    })
+
+    it("renders English controls on English URLs", async () => {
+        bannerState.pathname = "/en/contact"
+        render(<CookieBanner />)
+
+        expect(await screen.findByText("Cookies")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Reject" })).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Accept" })).toBeInTheDocument()
     })
 
     it("stays hidden when consent already exists", async () => {
