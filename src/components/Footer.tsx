@@ -2,13 +2,16 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 const THEME_KEY = "theme"
 
 export default function Footer() {
+    const { i18n } = useTranslation()
     const [mounted, setMounted] = useState(false)
     const [isDark, setIsDark] = useState(false)
-    const isBg = true
+    const lang = i18n.language?.toLowerCase() ?? "bg"
+    const isBg = lang.startsWith("bg")
 
     useEffect(() => {
         setMounted(true)
@@ -43,6 +46,7 @@ export default function Footer() {
               terms: "Общи условия",
               cookies: "Политика за бисквитките",
               rights: "Всички права запазени.",
+              phone: "Тел:",
               createdBy: "Created by",
           }
         : {
@@ -56,10 +60,11 @@ export default function Footer() {
               terms: "Terms of Service",
               cookies: "Cookie Policy",
               rights: "All rights reserved.",
+              phone: "Phone:",
               createdBy: "Created by",
           }
 
-const footerClass =
+    const footerClass =
     "border-t border-slate-200 bg-white dark:border-[#111111] dark:bg-[#000000]"
 
     const wrapperClass =
@@ -284,7 +289,7 @@ const footerClass =
                             href="tel:+359887764200"
                             className={contactLinkClass}
                         >
-                            <span>Тел:</span>
+                            <span>{t.phone}</span>
                             <span className="truncate">088 776 4200</span>
                         </a>
 
