@@ -242,13 +242,13 @@ export default function Contact() {
                                             placeholder="Вашият телефон"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
-                                            maxLength={120}
+                                            maxLength={40}
                                         />
                                     </div>
 
                                     <div>
                                         <label className="mb-2 block text-sm font-semibold text-slate-950 dark:text-white">
-                                            Тема
+                                            Тема *
                                         </label>
                                         <input
                                             className={inputClass}
@@ -257,7 +257,9 @@ export default function Contact() {
                                             placeholder="Тема на запитването"
                                             value={subject}
                                             onChange={(e) => setSubject(e.target.value)}
-                                            maxLength={120}
+                                            minLength={2}
+                                            maxLength={200}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -488,13 +490,13 @@ export default function Contact() {
                                             placeholder="Your phone"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
-                                            maxLength={120}
+                                            maxLength={40}
                                         />
                                     </div>
 
                                     <div>
                                         <label className="mb-2 block text-sm font-semibold text-slate-950 dark:text-white">
-                                            Subject
+                                            Subject *
                                         </label>
                                         <input
                                             className={inputClass}
@@ -503,7 +505,9 @@ export default function Contact() {
                                             placeholder="Inquiry subject"
                                             value={subject}
                                             onChange={(e) => setSubject(e.target.value)}
-                                            maxLength={120}
+                                            minLength={2}
+                                            maxLength={200}
+                                            required
                                         />
                                     </div>
                                 </div>
