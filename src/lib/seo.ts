@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import type { Locale } from "./locale"
+import { localizePath } from "./locale"
 
 export const SITE_URL = "https://nhalachev.com"
 export const SITE_NAME = "Halachev Accounting"
@@ -12,6 +14,68 @@ type PageMetadataOptions = {
     description: string
     path: string
     index?: boolean
+}
+
+
+type LocalizedPageMetadataOptions = PageMetadataOptions & {
+    locale: Locale
+}
+
+export function createLocalizedPageMetadata({
+    locale,
+    title,
+    description,
+    path,
+    index = true,
+}: LocalizedPageMetadataOptions): Metadata {
+    const normalizedPath = path === "/" ? "/" : `/${path.replace(/^\/+|\/+$/g, "")}`
+    const canonical = localizePath(locale, normalizedPath)
+    const bgUrl = localizePath("bg", normalizedPath)
+    const enUrl = localizePath("en", normalizedPath)
+    const socialTitle = `${title} | ${SITE_NAME}`
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical,
+            languages: {
+                bg: bgUrl,
+                en: enUrl,
+                "x-default": bgUrl,
+            },
+        },
+        openGraph: {
+            type: "website",
+            locale: locale === "bg" ? "bg_BG" : "en_US",
+            alternateLocale: [locale === "bg" ? "en_US" : "bg_BG"],
+            url: canonical,
+            siteName: SITE_NAME,
+            title: socialTitle,
+            description,
+            images: [
+                {
+                    url: SOCIAL_IMAGE,
+                    alt: SITE_NAME,
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: socialTitle,
+            description,
+            images: [SOCIAL_IMAGE],
+        },
+        robots: index
+            ? {
+                  index: true,
+                  follow: true,
+              }
+            : {
+                  index: false,
+                  follow: true,
+              },
+    }
 }
 
 export function createPageMetadata({
@@ -106,7 +170,7 @@ export const accountingServiceStructuredData = {
             founder: {
                 "@type": "Person",
                 name: "Никола Халачев",
-                url: `${SITE_URL}/about`,
+                url: `${SITE_URL}/bg/about`,
             },
             knowsLanguage: ["bg", "en"],
             sameAs: [
