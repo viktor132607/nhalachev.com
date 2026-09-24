@@ -151,11 +151,7 @@ export default function Navbar() {
                         <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-end lg:gap-8">
                             {leftItems.map((item) => {
                                 const active =
-                                    item.key === "home"
-                                        ? homeActive
-                                        : item.key === "services"
-                                          ? servicesActive
-                                          : false
+                                    item.key === "home" ? homeActive : servicesActive
 
                                 return (
                                     <button
