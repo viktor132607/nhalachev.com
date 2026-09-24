@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
 import { useEffect, useState } from "react"
+import { getLocaleFromPathname, localizePath, switchLocaleInPath } from "../lib/locale"
 
 const THEME_KEY = "theme"
 
@@ -11,27 +12,24 @@ export default function Navbar() {
     const { i18n } = useTranslation()
     const pathname = usePathname()
     const router = useRouter()
-    const [mounted, setMounted] = useState(false)
     const [isDark, setIsDark] = useState(false)
     const [servicesActive, setServicesActive] = useState(false)
+    const routeLocale = getLocaleFromPathname(pathname)
+    const fallbackLocale = i18n.language?.toLowerCase().startsWith("bg") ? "bg" : "en"
+    const locale = routeLocale ?? fallbackLocale
+    const homePath = localizePath(locale)
+    const isHome = pathname === homePath || pathname === "/"
 
     useEffect(() => {
-        setMounted(true)
-
-        const savedLang = localStorage.getItem("lang")
-        if (savedLang === "bg" || savedLang === "en") {
-            void i18n.changeLanguage(savedLang)
-        }
-
         const savedTheme = localStorage.getItem(THEME_KEY)
         const dark = savedTheme === "dark"
 
         document.documentElement.classList.toggle("dark", dark)
         setIsDark(dark)
-    }, [i18n])
+    }, [])
 
     useEffect(() => {
-        if (pathname !== "/") {
+        if (!isHome) {
             setServicesActive(false)
             return
         }
@@ -57,14 +55,14 @@ export default function Navbar() {
             window.removeEventListener("scroll", updateServicesActive)
             window.removeEventListener("resize", updateServicesActive)
         }
-    }, [pathname])
+    }, [isHome])
 
-    const isBg = mounted ? i18n.language?.toLowerCase().startsWith("bg") : true
+    const isBg = locale === "bg"
 
     const setLanguage = async (lng: "bg" | "en") => {
         localStorage.setItem("lang", lng)
         await i18n.changeLanguage(lng)
-        router.refresh()
+        router.push(switchLocaleInPath(pathname, lng))
     }
 
     const toggleTheme = () => {
@@ -76,13 +74,13 @@ export default function Navbar() {
     }
 
     const goToServices = () => {
-        if (pathname === "/") {
+        if (isHome) {
             const section = document.getElementById("services")
             if (section) {
                 section.scrollIntoView({ behavior: "smooth", block: "start" })
             }
         } else {
-            router.push("/")
+            router.push(homePath)
             setTimeout(() => {
                 const section = document.getElementById("services")
                 if (section) {
@@ -93,10 +91,10 @@ export default function Navbar() {
     }
 
     const goToHome = () => {
-        if (pathname === "/") {
+        if (isHome) {
             window.scrollTo({ top: 0, behavior: "smooth" })
         } else {
-            router.push("/")
+            router.push(homePath)
         }
     }
 
@@ -112,12 +110,12 @@ export default function Navbar() {
 
     const rightItems = isBg
         ? [
-              { to: "/about", label: "За мен" },
-              { to: "/contact", label: "Контакти" },
+              { to: localizePath(locale, "/about"), label: "За мен" },
+              { to: localizePath(locale, "/contact"), label: "Контакти" },
           ]
         : [
-              { to: "/about", label: "About Me" },
-              { to: "/contact", label: "Contact" },
+              { to: localizePath(locale, "/about"), label: "About Me" },
+              { to: localizePath(locale, "/contact"), label: "Contact" },
           ]
 
     const linkClass = (active: boolean) =>
@@ -141,7 +139,7 @@ export default function Navbar() {
                 : "text-slate-400 hover:text-slate-700 dark:text-zinc-500 dark:hover:text-zinc-200"
         }`
 
-    const homeActive = pathname === "/" && !servicesActive
+    const homeActive = isHome && !servicesActive
 
     return (
         <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">

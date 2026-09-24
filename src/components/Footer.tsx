@@ -1,17 +1,22 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { getLocaleFromPathname, localizePath } from "../lib/locale"
 
 const THEME_KEY = "theme"
 
 export default function Footer() {
     const { i18n } = useTranslation()
+    const pathname = usePathname()
     const [mounted, setMounted] = useState(false)
     const [isDark, setIsDark] = useState(false)
-    const lang = i18n.language?.toLowerCase() ?? "bg"
-    const isBg = lang.startsWith("bg")
+    const routeLocale = getLocaleFromPathname(pathname)
+    const fallbackLocale = i18n.language?.toLowerCase().startsWith("en") ? "en" : "bg"
+    const locale = routeLocale ?? fallbackLocale
+    const isBg = locale === "bg"
 
     useEffect(() => {
         setMounted(true)
@@ -123,7 +128,7 @@ export default function Footer() {
             <div className={wrapperClass}>
                 <div className={topGridClass}>
                     <div className={brandBlockClass}>
-                        <Link href="/" className="inline-flex items-center">
+                        <Link href={localizePath(locale)} className="inline-flex items-center">
                             <img
                                 src="/images/mainlogo.png"
                                 alt="Halachev Accounting"
@@ -249,13 +254,13 @@ export default function Footer() {
                             <h4 className={sectionTitleClass}>{t.company}</h4>
 
                             <div className={linksWrapClass}>
-                                <Link href="/" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale)} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.home}
                                 </Link>
-                                <Link href="/about" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale, "/about")} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.about}
                                 </Link>
-                                <Link href="/contact" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale, "/contact")} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.contact}
                                 </Link>
                             </div>
@@ -265,13 +270,13 @@ export default function Footer() {
                             <h4 className={sectionTitleClass}>{t.info}</h4>
 
                             <div className={linksWrapClass}>
-                                <Link href="/privacy" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale, "/privacy")} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.privacy}
                                 </Link>
-                                <Link href="/terms" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale, "/terms")} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.terms}
                                 </Link>
-                                <Link href="/cookies" className="transition hover:text-slate-950 dark:hover:text-white">
+                                <Link href={localizePath(locale, "/cookies")} className="transition hover:text-slate-950 dark:hover:text-white">
                                     {t.cookies}
                                 </Link>
                             </div>

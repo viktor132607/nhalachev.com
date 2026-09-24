@@ -3,18 +3,23 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTranslation } from "react-i18next"
+import { getLocaleFromPathname, localizePath } from "../lib/locale"
 
 export default function ContactBubble() {
     const { i18n } = useTranslation()
     const pathname = usePathname()
-    const isBg = i18n.language?.toLowerCase().startsWith("bg")
+    const routeLocale = getLocaleFromPathname(pathname)
+    const fallbackLocale = i18n.language?.toLowerCase().startsWith("bg") ? "bg" : "en"
+    const locale = routeLocale ?? fallbackLocale
+    const isBg = locale === "bg"
+    const contactPath = localizePath(locale, "/contact")
     const contactBubbleLabel = isBg ? "Свържете се" : "Contact us"
 
-    if (pathname === "/contact") return null
+    if (pathname === contactPath || pathname === "/contact") return null
 
     return (
         <Link
-            href="/contact"
+            href={contactPath}
             aria-label={contactBubbleLabel}
             title={contactBubbleLabel}
             className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-0 z-50 inline-flex h-12 w-12 items-center justify-center rounded-l-full rounded-r-none bg-slate-950 text-white shadow-2xl shadow-black/30 ring-1 ring-white/20 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-black dark:hover:bg-zinc-200 xl:bottom-8 xl:h-14 xl:w-14"

@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
+import { getLocaleFromPathname } from "../lib/locale"
 import {
     COOKIE_CONSENT_EVENT,
     getCookieConsent,
@@ -8,6 +10,8 @@ import {
 } from "../lib/cookies"
 
 export default function CookieBanner() {
+    const pathname = usePathname()
+    const isBg = getLocaleFromPathname(pathname) !== "en"
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
@@ -42,11 +46,12 @@ export default function CookieBanner() {
             <div className="mx-auto flex max-w-[1100px] flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.16)] dark:border-[#111111] dark:bg-[#000000] sm:p-5 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0">
                     <h3 className="text-base font-semibold text-slate-950 dark:text-white">
-                        Бисквитки
+                        {isBg ? "Бисквитки" : "Cookies"}
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-white/80">
-                        Този сайт използва задължителни бисквитки за правилна работа и optional
-                        бисквитки за външно съдържание и по-добро потребителско изживяване.
+                        {isBg
+                            ? "Този сайт използва задължителни бисквитки за правилна работа и optional бисквитки за външно съдържание и по-добро потребителско изживяване."
+                            : "This site uses essential cookies for proper operation and optional cookies for external content and a better user experience."}
                     </p>
                 </div>
 
@@ -56,7 +61,7 @@ export default function CookieBanner() {
                         onClick={rejectCookies}
                         className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-zinc-700 dark:bg-[#111111] dark:text-white dark:hover:bg-[#1a1a1a]"
                     >
-                        Откажи
+                        {isBg ? "Откажи" : "Reject"}
                     </button>
 
                     <button
@@ -64,7 +69,7 @@ export default function CookieBanner() {
                         onClick={acceptCookies}
                         className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-950 bg-slate-950 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-slate-200"
                     >
-                        Приемам
+                        {isBg ? "Приемам" : "Accept"}
                     </button>
                 </div>
             </div>
