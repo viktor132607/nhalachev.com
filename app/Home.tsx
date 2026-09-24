@@ -1,16 +1,15 @@
 "use client"
 
-import { useTranslation } from "react-i18next"
 import Benefits from "../src/components/home/Benefits"
 import Hero from "../src/components/home/Hero"
 import Services from "../src/components/home/Services"
 import { homeContent } from "../src/content/home"
+import { useSitePreferences } from "../src/context/SitePreferencesContext"
 import type { Locale } from "../src/lib/locale"
 
 export default function Home({ locale }: { locale?: Locale } = {}) {
-    const { i18n } = useTranslation()
-    const resolvedLocale: Locale =
-        locale ?? (i18n.language?.toLowerCase().startsWith("bg") ? "bg" : "en")
+    const { locale: contextLocale } = useSitePreferences()
+    const resolvedLocale: Locale = locale ?? contextLocale
     const content = homeContent[resolvedLocale]
 
     const scrollToId = (id: string, event: React.MouseEvent<HTMLAnchorElement>) => {
