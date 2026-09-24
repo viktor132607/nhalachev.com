@@ -128,6 +128,7 @@ describe("SitePreferencesProvider", () => {
         state.pathname = "/bg/about"
         renderProvider()
 
+        await waitFor(() => expect(localStorage.getItem("lang")).toBe("bg"))
         fireEvent.click(screen.getByRole("button", { name: "en" }))
 
         await waitFor(() => {
