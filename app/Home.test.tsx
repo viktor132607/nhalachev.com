@@ -2,9 +2,13 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
-vi.mock("react-i18next", () => ({
-    useTranslation: () => ({
-        i18n: { language: "bg" },
+vi.mock("../src/context/SitePreferencesContext", () => ({
+    useSitePreferences: () => ({
+        locale: "bg",
+        isDark: false,
+        themeReady: true,
+        toggleTheme: vi.fn(),
+        setLocale: vi.fn(),
     }),
 }))
 
@@ -15,19 +19,8 @@ describe("Home heading hierarchy", () => {
         render(<Home locale="bg" />)
 
         expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
-        expect(
-            screen.getByRole("heading", {
-                level: 1,
-                name: /Счетоводство без излишен хаос/,
-            })
-        ).toBeInTheDocument()
-
-        expect(
-            screen.getByRole("heading", {
-                level: 2,
-                name: "Услуги & Дейности",
-            })
-        ).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 1, name: /Счетоводство без излишен хаос/ })).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 2, name: "Услуги & Дейности" })).toBeInTheDocument()
 
         for (const name of [
             "Счетоводни услуги",
@@ -45,19 +38,8 @@ describe("Home heading hierarchy", () => {
         render(<Home locale="en" />)
 
         expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
-        expect(
-            screen.getByRole("heading", {
-                level: 1,
-                name: /Accounting without the extra chaos/,
-            })
-        ).toBeInTheDocument()
-
-        expect(
-            screen.getByRole("heading", {
-                level: 2,
-                name: "Services & Activities",
-            })
-        ).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 1, name: /Accounting without the extra chaos/ })).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 2, name: "Services & Activities" })).toBeInTheDocument()
 
         for (const name of [
             "Accounting Services",
