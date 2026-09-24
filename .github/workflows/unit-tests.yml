@@ -1,4 +1,4 @@
-name: Unit tests
+name: CI
 
 on:
   workflow_dispatch:
@@ -26,6 +26,12 @@ jobs:
 
       - name: Run 100% coverage suite
         run: npm run test:coverage
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Build production app
+        run: npm run build
 
       - name: Keep package lock in sync
         if: success()
