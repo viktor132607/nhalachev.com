@@ -1,5 +1,5 @@
 import React from "react"
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const navState = vi.hoisted(() => ({
@@ -99,11 +99,11 @@ describe("Navbar", () => {
 
         expect(navMocks.changeLanguage).toHaveBeenCalledWith("en")
         expect(localStorage.getItem("lang")).toBe("en")
-        expect(navMocks.push).toHaveBeenCalledWith("/en/about")
+        await waitFor(() => expect(navMocks.push).toHaveBeenCalledWith("/en/about"))
 
         fireEvent.click(screen.getByRole("button", { name: "BG" }))
         expect(navMocks.changeLanguage).toHaveBeenCalledWith("bg")
-        expect(navMocks.push).toHaveBeenCalledWith("/bg/about")
+        await waitFor(() => expect(navMocks.push).toHaveBeenCalledWith("/bg/about"))
     })
 
     it("scrolls to services, tracks its active state, handles resize and scrolls home", () => {
