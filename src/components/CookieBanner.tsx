@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { usePathname } from "next/navigation"
-import { getLocaleFromPathname } from "../lib/locale"
+import { useSitePreferences } from "../context/SitePreferencesContext"
 import {
     COOKIE_CONSENT_EVENT,
     getCookieConsent,
@@ -10,8 +9,8 @@ import {
 } from "../lib/cookies"
 
 export default function CookieBanner() {
-    const pathname = usePathname()
-    const isBg = getLocaleFromPathname(pathname) !== "en"
+    const { locale } = useSitePreferences()
+    const isBg = locale === "bg"
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
