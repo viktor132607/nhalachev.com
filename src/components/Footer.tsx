@@ -10,45 +10,12 @@ import tiktokIcon from "../../public/images/tik-tok_4817846.png"
 import whatsappIcon from "../../public/images/1384007.png"
 import viberIcon from "../../public/images/viber.png"
 import revolutIcon from "../../public/images/revolut.png"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { getLocaleFromPathname, localizePath } from "../lib/locale"
-
-const THEME_KEY = "theme"
+import { useSitePreferences } from "../context/SitePreferencesContext"
+import { localizePath } from "../lib/locale"
 
 export default function Footer() {
-    const { i18n } = useTranslation()
-    const pathname = usePathname()
-    const [mounted, setMounted] = useState(false)
-    const [isDark, setIsDark] = useState(false)
-    const routeLocale = getLocaleFromPathname(pathname)
-    const fallbackLocale = i18n.language?.toLowerCase().startsWith("en") ? "en" : "bg"
-    const locale = routeLocale ?? fallbackLocale
+    const { locale, isDark, themeReady } = useSitePreferences()
     const isBg = locale === "bg"
-
-    useEffect(() => {
-        const syncInitialTheme = window.setTimeout(() => {
-            const savedTheme = localStorage.getItem(THEME_KEY)
-            const dark = savedTheme === "dark"
-
-            document.documentElement.classList.toggle("dark", dark)
-            setMounted(true)
-            setIsDark(dark)
-        }, 0)
-
-        const handleThemeChange = () => {
-            const nextDark = document.documentElement.classList.contains("dark")
-            setIsDark(nextDark)
-        }
-
-        window.addEventListener("themechange", handleThemeChange)
-
-        return () => {
-            window.clearTimeout(syncInitialTheme)
-            window.removeEventListener("themechange", handleThemeChange)
-        }
-    }, [])
 
     const t = isBg
         ? {
@@ -93,7 +60,7 @@ export default function Footer() {
         "min-w-0 max-w-none md:max-w-md"
 
     const logoClass =
-        `h-10 w-auto object-contain sm:h-11 md:h-12 xl:h-14 ${mounted && isDark ? "invert" : ""}`
+        `h-10 w-auto object-contain sm:h-11 md:h-12 xl:h-14 ${themeReady && isDark ? "invert" : ""}`
 
     const descriptionClass =
         "mt-4 max-w-md text-sm leading-6 text-slate-600 dark:text-white/80 sm:text-[15px] sm:leading-7"
@@ -105,10 +72,10 @@ export default function Footer() {
         "inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white transition hover:scale-105 hover:border-slate-300 dark:border-[#111111] dark:bg-[#111111] dark:hover:border-white/20 sm:h-11 sm:w-11"
 
     const fullIconClass =
-        `h-full w-full rounded-full object-contain p-[1px] ${mounted && isDark ? "invert" : ""}`
+        `h-full w-full rounded-full object-contain p-[1px] ${themeReady && isDark ? "invert" : ""}`
 
     const tikTokIconClass =
-        `h-full w-full rounded-full object-contain ${mounted && isDark ? "invert" : ""}`
+        `h-full w-full rounded-full object-contain ${themeReady && isDark ? "invert" : ""}`
 
     const linksGridClass =
         "grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:justify-self-end xl:gap-14"
