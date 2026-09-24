@@ -7,9 +7,10 @@ import {
 } from "./locale"
 
 describe("locale helpers", () => {
-    it("validates supported locales case-insensitively", () => {
+    it("accepts only canonical lowercase locale route segments", () => {
         expect(isLocale("bg")).toBe(true)
-        expect(isLocale("EN")).toBe(true)
+        expect(isLocale("en")).toBe(true)
+        expect(isLocale("EN")).toBe(false)
         expect(isLocale("de")).toBe(false)
     })
 
