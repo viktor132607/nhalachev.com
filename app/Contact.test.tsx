@@ -56,6 +56,14 @@ describe("Contact", () => {
         expect(field(bg.container, "subject")).toHaveAttribute("minlength", "2")
         expect(field(bg.container, "subject")).toHaveAttribute("maxlength", "200")
         expect(field(bg.container, "subject")).toBeRequired()
+        expect(screen.getByLabelText("Име *")).toBe(field(bg.container, "name"))
+        expect(screen.getByLabelText("Имейл *")).toBe(field(bg.container, "email"))
+        expect(screen.getByLabelText("Телефон")).toBe(field(bg.container, "phone"))
+        expect(screen.getByLabelText("Тема *")).toBe(field(bg.container, "subject"))
+        expect(screen.getByLabelText("Съобщение *")).toBe(field(bg.container, "message"))
+        expect(field(bg.container, "name")).toHaveAttribute("autocomplete", "name")
+        expect(field(bg.container, "email")).toHaveAttribute("autocomplete", "email")
+        expect(field(bg.container, "phone")).toHaveAttribute("autocomplete", "tel")
         bg.unmount()
 
         contactState.locale = "en"
@@ -90,6 +98,7 @@ describe("Contact", () => {
         })
 
         expect(await screen.findByText("Съобщението беше изпратено успешно.")).toBeInTheDocument()
+        expect(screen.getByRole("status")).toHaveAttribute("aria-live", "polite")
         expect(fetchMock).toHaveBeenCalledTimes(1)
 
         const [url, options] = fetchMock.mock.calls[0]
@@ -158,7 +167,7 @@ describe("Contact", () => {
         fireEvent.submit(container.querySelector("form")!)
 
         expect(await screen.findByText("Your message was sent successfully.")).toBeInTheDocument()
-        expect(container.querySelector("iframe")).toBeInTheDocument()
+        expect(container.querySelector("iframe")).toHaveAttribute("title", "Address")
     })
 
     it("handles an application-level error response", async () => {
