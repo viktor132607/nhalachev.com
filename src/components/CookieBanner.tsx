@@ -46,9 +46,13 @@ export default function CookieBanner() {
 
     return (
         <div className="fixed inset-x-0 bottom-4 z-[100] px-4">
-            <div className="mx-auto flex max-w-[1100px] flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.16)] dark:border-[#111111] dark:bg-[#000000] sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+            <div
+                role="dialog"
+                aria-modal="false"
+                aria-labelledby="cookie-banner-title"
+                className="mx-auto flex max-w-[1100px] flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.16)] dark:border-[#111111] dark:bg-[#000000] sm:p-5 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0">
-                    <h3 className="text-base font-semibold text-slate-950 dark:text-white">
+                    <h3 id="cookie-banner-title" className="text-base font-semibold text-slate-950 dark:text-white">
                         {isBg ? "Бисквитки" : "Cookies"}
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-white/80">

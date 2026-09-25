@@ -119,7 +119,10 @@ export default function Navbar() {
         <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">
             <div className="mx-auto max-w-[1600px] px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
                 <div className="grid min-h-[72px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-3 py-3 sm:min-h-[80px] sm:grid-cols-[1fr_auto_1fr] sm:gap-x-4 sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
-                    <div className="order-2 col-span-2 sm:order-3 sm:col-span-3 lg:order-1 lg:col-span-1">
+                    <nav
+                        aria-label={isBg ? "Основна навигация" : "Main navigation"}
+                        className="order-2 col-span-2 sm:order-3 sm:col-span-3 lg:order-1 lg:col-span-1"
+                    >
                         <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-end lg:gap-8">
                             {leftItems.map((item) => {
                                 const active =
@@ -130,6 +133,7 @@ export default function Navbar() {
                                         key={item.key}
                                         type="button"
                                         onClick={item.action}
+                                        aria-current={active ? (item.key === "home" ? "page" : "location") : undefined}
                                         className={navButtonClass(active)}
                                     >
                                         {item.label}
@@ -141,13 +145,14 @@ export default function Navbar() {
                                 <Link
                                     key={item.to}
                                     href={item.to}
+                                    aria-current={pathname === item.to ? "page" : undefined}
                                     className={linkClass(pathname === item.to)}
                                 >
                                     {item.label}
                                 </Link>
                             ))}
                         </div>
-                    </div>
+                    </nav>
 
                     <div className="order-1 col-start-1 row-start-1 justify-self-start sm:col-start-2 sm:justify-self-center lg:order-2 lg:col-start-auto lg:row-start-auto">
                         <button
@@ -171,6 +176,7 @@ export default function Navbar() {
                         <button
                             type="button"
                             onClick={toggleTheme}
+                            aria-pressed={isDark}
                             className="flex h-10 w-10 items-center justify-center rounded-full border border-transparent bg-transparent transition hover:border-neutral-200 hover:bg-neutral-100 dark:hover:border-[#111111] dark:hover:bg-[#111111]"
                             aria-label={isBg ? "Смени тема" : "Toggle theme"}
                         >
@@ -190,6 +196,7 @@ export default function Navbar() {
                             <button
                                 type="button"
                                 onClick={() => void setLocale("bg")}
+                                aria-pressed={isBg}
                                 className={langButtonClass(isBg)}
                             >
                                 BG
@@ -200,6 +207,7 @@ export default function Navbar() {
                             <button
                                 type="button"
                                 onClick={() => void setLocale("en")}
+                                aria-pressed={!isBg}
                                 className={langButtonClass(!isBg)}
                             >
                                 EN

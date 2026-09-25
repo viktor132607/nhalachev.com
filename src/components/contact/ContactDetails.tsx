@@ -60,6 +60,7 @@ export default function ContactDetails({
                     {hasOptionalCookies ? (
                         <div className="overflow-hidden rounded-[20px] border border-slate-200 dark:border-zinc-700 sm:rounded-[22px] lg:rounded-[24px]">
                             <iframe
+                                title={content.addressTitle}
                                 className="h-[300px] w-full border-0 sm:h-[340px] lg:h-[380px]"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
