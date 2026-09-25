@@ -32,6 +32,8 @@ describe("CookieBanner", () => {
         render(<CookieBanner />)
 
         expect(await screen.findByText("Бисквитки")).toBeInTheDocument()
+        const dialog = screen.getByRole("dialog", { name: "Бисквитки" })
+        expect(dialog).toHaveAttribute("aria-modal", "false")
         fireEvent.click(screen.getByRole("button", { name: "Приемам" }))
 
         await waitFor(() => expect(screen.queryByText("Бисквитки")).not.toBeInTheDocument())
