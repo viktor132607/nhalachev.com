@@ -8,7 +8,7 @@ const icons = [
 
 export default function Benefits({ cards }: { cards: BenefitCardContent[] }) {
     return (
-        <section className="relative grid gap-5 bg-white px-5 py-9 dark:bg-[#111] sm:px-10 lg:grid-cols-3 lg:gap-6 lg:px-12 lg:py-12">
+        <section className="relative grid gap-5 bg-white px-5 py-8 dark:bg-[#111] sm:px-8 lg:grid-cols-3 lg:gap-4 lg:px-9 lg:py-9">
             {cards.map((card, index) => (
                 <article key={card.title} className="relative pt-9">
                     <div className="absolute left-3 top-0 h-14 w-14 text-black dark:text-white">{icons[index]}</div>

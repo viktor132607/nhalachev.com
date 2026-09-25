@@ -19,8 +19,8 @@ const images: Record<string, StaticImageData> = { accounting: accountingImage, p
 
 export default function Services({ title, sections, foreignClients, content, locale }: ServicesProps) {
     return (
-        <section id="services" className="scroll-mt-20 bg-[#f7f8f9] px-5 py-12 dark:bg-[#191919] sm:px-10 lg:px-12 lg:py-16">
-            <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
+        <section id="services" className="scroll-mt-20 bg-[#f7f8f9] px-5 py-12 dark:bg-[#191919] sm:px-8 lg:px-9 lg:py-14">
+            <div className="grid w-full gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
                 <div>
                     <p className="flex items-center gap-5 text-sm uppercase tracking-wide text-neutral-700 dark:text-neutral-300">{title}<span className="h-px w-32 bg-neutral-500" /></p>
                     <h2 className="home-display mt-4 max-w-[630px] text-[clamp(2.6rem,4.1vw,4.5rem)] leading-[1.02] text-[#292929] dark:text-white">{locale === "bg" ? "Професионална подкрепа за вашия бизнес" : "Professional support for your business"}</h2>
@@ -36,7 +36,7 @@ export default function Services({ title, sections, foreignClients, content, loc
                     ))}
                 </div>
             </div>
-            <details id="service-details" className="mx-auto mt-9 max-w-[1280px] scroll-mt-24 rounded-xl bg-white px-5 py-5 dark:bg-[#292929] sm:px-8">
+            <details id="service-details" className="mt-9 w-full scroll-mt-24 rounded-xl bg-white px-5 py-5 dark:bg-[#292929] sm:px-8">
                 <summary className="cursor-pointer font-semibold text-[#222] dark:text-white">{locale === "bg" ? "Всички услуги и дейности" : "All services and activities"}</summary>
                 <div className="divide-y divide-neutral-200 dark:divide-neutral-700">
                     {sections.map((section) => <ServiceSection key={section.id} section={section} />)}

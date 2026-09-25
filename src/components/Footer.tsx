@@ -51,7 +51,7 @@ export default function Footer() {
     "border-t border-slate-200 bg-white dark:border-[#111111] dark:bg-[#000000]"
 
     const wrapperClass =
-        "mx-auto max-w-[1600px] px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
+        "w-full px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
 
     const topGridClass =
         "grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-start md:gap-12 lg:gap-16 xl:grid-cols-[minmax(320px,460px)_minmax(0,1fr)]"

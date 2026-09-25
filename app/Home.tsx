@@ -19,7 +19,7 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[1600px] scroll-smooth">
+        <div className="w-full scroll-smooth">
             <Hero content={content.hero} onScrollTo={scrollToId} locale={resolvedLocale} />
             <Benefits cards={content.benefits} />
             <Services
