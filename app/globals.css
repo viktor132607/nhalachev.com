@@ -49,3 +49,12 @@ html.dark
     ):focus-visible {
     outline-color: #93c5fd;
 }
+
+.home-display { font-family: Impact, "Arial Narrow", "Roboto Condensed", Arial, sans-serif; font-weight: 900; letter-spacing: 0.005em; }
+
+.home-hero-overlay { background: linear-gradient(90deg, #f5f6f4 0%, rgba(245,246,244,.93) 60%, rgba(245,246,244,.2) 100%); }
+.dark .home-hero-overlay { background: linear-gradient(90deg, #1b1b1b 0%, rgba(27,27,27,.93) 60%, rgba(27,27,27,.3) 100%); }
+@media (min-width: 640px) {
+  .home-hero-overlay { background: linear-gradient(90deg, #f5f6f4 0%, #f5f6f4 27%, rgba(245,246,244,.86) 36%, rgba(245,246,244,0) 58%); }
+  .dark .home-hero-overlay { background: linear-gradient(90deg, #1b1b1b 0%, #1b1b1b 27%, rgba(27,27,27,.85) 36%, rgba(27,27,27,0) 58%); }
+}

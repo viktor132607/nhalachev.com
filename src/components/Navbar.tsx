@@ -118,12 +118,12 @@ export default function Navbar() {
     return (
         <header className="sticky top-0 z-50 border-b border-[#e5e7eb] bg-[#ffffff] backdrop-blur dark:border-[#111111] dark:bg-[#000000]">
             <div className="mx-auto max-w-[1600px] px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-12">
-                <div className="grid min-h-[72px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-3 py-3 sm:min-h-[80px] sm:grid-cols-[1fr_auto_1fr] sm:gap-x-4 sm:py-4 lg:min-h-[92px] lg:grid-cols-[1fr_auto_1fr_auto] lg:gap-x-8 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
+                <div className="grid min-h-[72px] grid-cols-[1fr_auto] items-center gap-x-3 gap-y-3 py-3 sm:min-h-[80px] sm:grid-cols-[1fr_auto_1fr] sm:gap-x-4 sm:py-4 lg:min-h-[72px] lg:grid-cols-[150px_1fr_auto] lg:gap-x-12 lg:gap-y-0 lg:py-0 xl:gap-x-10 2xl:gap-x-12">
                     <nav
                         aria-label={isBg ? "Основна навигация" : "Main navigation"}
-                        className="order-2 col-span-2 sm:order-3 sm:col-span-3 lg:order-1 lg:col-span-1"
+                        className="order-2 col-span-2 sm:order-3 sm:col-span-3 lg:order-2 lg:col-span-1"
                     >
-                        <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-end lg:gap-8">
+                        <div className="grid grid-cols-4 items-center justify-items-center gap-x-2 whitespace-nowrap lg:flex lg:justify-start lg:gap-8">
                             {leftItems.map((item) => {
                                 const active =
                                     item.key === "home" ? homeActive : effectiveServicesActive
@@ -154,7 +154,7 @@ export default function Navbar() {
                         </div>
                     </nav>
 
-                    <div className="order-1 col-start-1 row-start-1 justify-self-start sm:col-start-2 sm:justify-self-center lg:order-2 lg:col-start-auto lg:row-start-auto">
+                    <div className="order-1 col-start-1 row-start-1 justify-self-start sm:col-start-2 sm:justify-self-center lg:order-1 lg:col-start-auto lg:row-start-auto">
                         <button
                             type="button"
                             onClick={goToHome}
@@ -172,7 +172,7 @@ export default function Navbar() {
                         </button>
                     </div>
 
-                    <div className="order-1 col-start-2 row-start-1 flex items-center justify-end gap-3 sm:col-start-3 sm:justify-self-end lg:order-4 lg:col-start-auto lg:row-start-auto lg:gap-4">
+                    <div className="order-1 col-start-2 row-start-1 flex items-center justify-end gap-3 sm:col-start-3 sm:justify-self-end lg:order-3 lg:col-start-auto lg:row-start-auto lg:gap-4">
                         <button
                             type="button"
                             onClick={toggleTheme}
@@ -215,7 +215,6 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    <div className="hidden lg:order-3 lg:flex" />
                 </div>
             </div>
         </header>

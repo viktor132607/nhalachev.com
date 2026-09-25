@@ -20,7 +20,7 @@ describe("Home heading hierarchy", () => {
 
         expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
         expect(screen.getByRole("heading", { level: 1, name: /Счетоводство без излишен хаос/ })).toBeInTheDocument()
-        expect(screen.getByRole("heading", { level: 2, name: "Услуги & Дейности" })).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 2, name: "Професионална подкрепа за вашия бизнес" })).toBeInTheDocument()
 
         for (const name of [
             "Счетоводни услуги",
@@ -39,7 +39,7 @@ describe("Home heading hierarchy", () => {
 
         expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
         expect(screen.getByRole("heading", { level: 1, name: /Accounting without the extra chaos/ })).toBeInTheDocument()
-        expect(screen.getByRole("heading", { level: 2, name: "Services & Activities" })).toBeInTheDocument()
+        expect(screen.getByRole("heading", { level: 2, name: "Professional support for your business" })).toBeInTheDocument()
 
         for (const name of [
             "Accounting Services",

@@ -1,5 +1,6 @@
 "use client"
 
+import Closing from "../src/components/home/Closing"
 import Benefits from "../src/components/home/Benefits"
 import Hero from "../src/components/home/Hero"
 import Services from "../src/components/home/Services"
@@ -18,14 +19,17 @@ export default function Home({ locale }: { locale?: Locale } = {}) {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[1600px] scroll-smooth px-2 py-2 sm:px-3 sm:py-3 md:px-4 lg:px-5 xl:px-6 2xl:px-8">
-            <Hero content={content.hero} onScrollTo={scrollToId} />
+        <div className="mx-auto w-full max-w-[1600px] scroll-smooth">
+            <Hero content={content.hero} onScrollTo={scrollToId} locale={resolvedLocale} />
             <Benefits cards={content.benefits} />
             <Services
                 title={content.servicesTitle}
                 sections={content.serviceSections}
                 foreignClients={content.foreignClients}
+                content={content.hero}
+                locale={resolvedLocale}
             />
+            <Closing highlights={content.hero.highlights} locale={resolvedLocale} />
         </div>
     )
 }
