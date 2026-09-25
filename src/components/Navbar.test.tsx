@@ -86,6 +86,8 @@ describe("Navbar", () => {
         navState.isDark = true
         render(<Navbar />)
 
+        expect(screen.getByRole("navigation", { name: "Основна навигация" })).toBeInTheDocument()
+        expect(screen.getByRole("link", { name: "За мен" })).toHaveAttribute("aria-current", "page")
         expect(screen.getByAltText("Halachev Accounting").className).toContain("invert")
 
         fireEvent.click(screen.getByRole("button", { name: "Смени тема" }))
