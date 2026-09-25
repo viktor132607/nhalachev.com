@@ -8,19 +8,21 @@ const icons = [
 
 export default function Benefits({ cards }: { cards: BenefitCardContent[] }) {
     return (
-        <section className="relative grid gap-5 bg-white px-5 py-8 dark:bg-[#111] sm:px-8 lg:grid-cols-3 lg:gap-4 lg:px-9 lg:py-9">
-            {cards.map((card, index) => (
-                <article key={card.title} className="relative pt-9">
-                    <div className="absolute left-3 top-0 h-14 w-14 text-black dark:text-white">{icons[index]}</div>
-                    <div className="h-full rounded-2xl bg-[#fbfbfb] px-5 pb-6 pt-7 dark:bg-[#202020] sm:px-6">
-                        <h2 className="text-lg font-bold text-[#151515] dark:text-white">{card.title}</h2>
-                        <p className="mt-2 whitespace-pre-line text-sm leading-6 text-neutral-600 dark:text-neutral-300">{card.description}</p>
-                        <ul className="mt-4 space-y-2 text-[13px] leading-6 text-[#303030] dark:text-neutral-200">
-                            {card.bullets.map((bullet) => <li key={bullet} className="flex gap-2"><span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-black dark:bg-white" />{bullet}</li>)}
-                        </ul>
-                    </div>
-                </article>
-            ))}
+        <section className="bg-white px-5 py-10 dark:bg-[#111] sm:px-8 lg:px-9 lg:py-12">
+            <div className="mx-auto grid w-full max-w-[1320px] gap-5 lg:grid-cols-3 lg:gap-6">
+                {cards.map((card, index) => (
+                    <article key={card.title} className="relative pt-10">
+                        <div className="absolute left-5 top-1 flex h-14 w-14 items-center justify-center rounded-xl bg-[#ececeb] p-2.5 text-black dark:bg-[#333] dark:text-white">{icons[index]}</div>
+                        <div className="h-full min-h-[245px] rounded-2xl border border-[#ececec] bg-white px-6 pb-7 pt-8 shadow-[0_8px_28px_rgba(0,0,0,0.045)] dark:border-[#383838] dark:bg-[#202020] sm:px-7">
+                            <h2 className="text-lg font-bold text-[#151515] dark:text-white">{card.title}</h2>
+                            <p className="mt-2 whitespace-pre-line text-sm leading-6 text-neutral-600 dark:text-neutral-300">{card.description}</p>
+                            <ul className="mt-4 space-y-2 text-sm leading-6 text-[#303030] dark:text-neutral-200">
+                                {card.bullets.map((bullet) => <li key={bullet} className="flex gap-2"><span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-black dark:bg-white" /><span>{bullet}</span></li>)}
+                            </ul>
+                        </div>
+                    </article>
+                ))}
+            </div>
         </section>
     )
 }
