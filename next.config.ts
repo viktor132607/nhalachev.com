@@ -14,7 +14,7 @@ const contentSecurityPolicy = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self' https://viktor-iliev.site https://www.viktor-iliev.site",
   "upgrade-insecure-requests",
 ].join("; ")
 
@@ -34,10 +34,6 @@ export const securityHeaders = [
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
-  },
-  {
-    key: "X-Frame-Options",
-    value: "DENY",
   },
 ]
 
