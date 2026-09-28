@@ -225,12 +225,12 @@ export default function Footer() {
                         <p className={createdByClass}>
                             {t.createdBy}{" "}
                             <a
-                                href="https://github.com/viktor132607"
+                                href="https://viktor-iliev.site/portfolio/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="font-semibold transition hover:text-slate-900 dark:hover:text-white"
                             >
-                                viktor132607
+                                VIktor Iliev
                             </a>
                         </p>
                     </div>
